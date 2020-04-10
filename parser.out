@@ -1,71 +1,100 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
+Unused terminals:
+
+    COMMA
+    CONJUNCTION
+    CONS
+    DISJUNCTION
+    DIVIDE
+    EQUAL_TO
+    FALSE
+    GREATER_THAN
+    GREATER_THAN_EQUAL_TO
+    HASHTAG
+    IN
+    INT_DIVIDE
+    LEFT_BRACKET
+    LESS_THAN
+    LESS_THAN_EQUAL_TO
+    MOD
+    NEGATION
+    NOT_EQUAL_TO
+    RAISED_TO_POWER_OF
+    RIGHT_BRACKET
+    STRING
+    TIMES
+    TRUE
+
 Grammar
 
 Rule 0     S' -> expr
-Rule 1     expr -> stat
-Rule 2     expr -> prop
-Rule 3     stat -> VARIABLE EQUALS TRUE
-Rule 4     stat -> VARIABLE EQUALS FALSE
-Rule 5     prop -> NEGATION prop
-Rule 6     prop -> prop CONJUNCTION prop
-Rule 7     prop -> prop DISJUNCTION prop
-Rule 8     prop -> prop MATERIAL_IMPLICATION prop
-Rule 9     prop -> prop BICONDITIONAL prop
-Rule 10    prop -> TRUE
-Rule 11    prop -> FALSE
-Rule 12    prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
-Rule 13    prop -> VARIABLE
+Rule 1     expr -> prop
+Rule 2     prop -> prop PLUS prop
+Rule 3     prop -> prop MINUS prop
+Rule 4     prop -> MINUS prop
+Rule 5     prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+Rule 6     prop -> INTEGER
+Rule 7     prop -> REAL
 
 Terminals, with rules where they appear
 
-BICONDITIONAL        : 9
-CONJUNCTION          : 6
-DISJUNCTION          : 7
-EQUALS               : 3 4
-FALSE                : 4 11
-LEFT_PARENTHESIS     : 12
-MATERIAL_IMPLICATION : 8
-NEGATION             : 5
-RIGHT_PARENTHESIS    : 12
-TRUE                 : 3 10
-VARIABLE             : 3 4 13
+COMMA                : 
+CONJUNCTION          : 
+CONS                 : 
+DISJUNCTION          : 
+DIVIDE               : 
+EQUAL_TO             : 
+FALSE                : 
+GREATER_THAN         : 
+GREATER_THAN_EQUAL_TO : 
+HASHTAG              : 
+IN                   : 
+INTEGER              : 6
+INT_DIVIDE           : 
+LEFT_BRACKET         : 
+LEFT_PARENTHESIS     : 5
+LESS_THAN            : 
+LESS_THAN_EQUAL_TO   : 
+MINUS                : 3 4
+MOD                  : 
+NEGATION             : 
+NOT_EQUAL_TO         : 
+PLUS                 : 2
+RAISED_TO_POWER_OF   : 
+REAL                 : 7
+RIGHT_BRACKET        : 
+RIGHT_PARENTHESIS    : 5
+STRING               : 
+TIMES                : 
+TRUE                 : 
 error                : 
 
 Nonterminals, with rules where they appear
 
 expr                 : 0
-prop                 : 2 5 6 6 7 7 8 8 9 9 12
-stat                 : 1
+prop                 : 1 2 2 3 3 4 5
 
 Parsing method: LALR
 
 state 0
 
     (0) S' -> . expr
-    (1) expr -> . stat
-    (2) expr -> . prop
-    (3) stat -> . VARIABLE EQUALS TRUE
-    (4) stat -> . VARIABLE EQUALS FALSE
-    (5) prop -> . NEGATION prop
-    (6) prop -> . prop CONJUNCTION prop
-    (7) prop -> . prop DISJUNCTION prop
-    (8) prop -> . prop MATERIAL_IMPLICATION prop
-    (9) prop -> . prop BICONDITIONAL prop
-    (10) prop -> . TRUE
-    (11) prop -> . FALSE
-    (12) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
-    (13) prop -> . VARIABLE
+    (1) expr -> . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . MINUS prop
+    (5) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (6) prop -> . INTEGER
+    (7) prop -> . REAL
 
-    VARIABLE        shift and go to state 4
-    NEGATION        shift and go to state 7
-    TRUE            shift and go to state 5
-    FALSE           shift and go to state 6
-    LEFT_PARENTHESIS shift and go to state 8
+    MINUS           shift and go to state 3
+    LEFT_PARENTHESIS shift and go to state 4
+    INTEGER         shift and go to state 5
+    REAL            shift and go to state 6
 
     expr                           shift and go to state 1
-    stat                           shift and go to state 2
-    prop                           shift and go to state 3
+    prop                           shift and go to state 2
 
 state 1
 
@@ -75,353 +104,165 @@ state 1
 
 state 2
 
-    (1) expr -> stat .
+    (1) expr -> prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
 
-    $end            reduce using rule 1 (expr -> stat .)
+    $end            reduce using rule 1 (expr -> prop .)
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 8
 
 
 state 3
 
-    (2) expr -> prop .
-    (6) prop -> prop . CONJUNCTION prop
-    (7) prop -> prop . DISJUNCTION prop
-    (8) prop -> prop . MATERIAL_IMPLICATION prop
-    (9) prop -> prop . BICONDITIONAL prop
+    (4) prop -> MINUS . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . MINUS prop
+    (5) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (6) prop -> . INTEGER
+    (7) prop -> . REAL
 
-    $end            reduce using rule 2 (expr -> prop .)
-    CONJUNCTION     shift and go to state 9
-    DISJUNCTION     shift and go to state 10
-    MATERIAL_IMPLICATION shift and go to state 11
-    BICONDITIONAL   shift and go to state 12
+    MINUS           shift and go to state 3
+    LEFT_PARENTHESIS shift and go to state 4
+    INTEGER         shift and go to state 5
+    REAL            shift and go to state 6
 
+    prop                           shift and go to state 9
 
 state 4
 
-    (3) stat -> VARIABLE . EQUALS TRUE
-    (4) stat -> VARIABLE . EQUALS FALSE
-    (13) prop -> VARIABLE .
+    (5) prop -> LEFT_PARENTHESIS . prop RIGHT_PARENTHESIS
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . MINUS prop
+    (5) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (6) prop -> . INTEGER
+    (7) prop -> . REAL
 
-    EQUALS          shift and go to state 13
-    CONJUNCTION     reduce using rule 13 (prop -> VARIABLE .)
-    DISJUNCTION     reduce using rule 13 (prop -> VARIABLE .)
-    MATERIAL_IMPLICATION reduce using rule 13 (prop -> VARIABLE .)
-    BICONDITIONAL   reduce using rule 13 (prop -> VARIABLE .)
-    $end            reduce using rule 13 (prop -> VARIABLE .)
+    MINUS           shift and go to state 3
+    LEFT_PARENTHESIS shift and go to state 4
+    INTEGER         shift and go to state 5
+    REAL            shift and go to state 6
 
+    prop                           shift and go to state 10
 
 state 5
 
-    (10) prop -> TRUE .
+    (6) prop -> INTEGER .
 
-    CONJUNCTION     reduce using rule 10 (prop -> TRUE .)
-    DISJUNCTION     reduce using rule 10 (prop -> TRUE .)
-    MATERIAL_IMPLICATION reduce using rule 10 (prop -> TRUE .)
-    BICONDITIONAL   reduce using rule 10 (prop -> TRUE .)
-    $end            reduce using rule 10 (prop -> TRUE .)
-    RIGHT_PARENTHESIS reduce using rule 10 (prop -> TRUE .)
+    PLUS            reduce using rule 6 (prop -> INTEGER .)
+    MINUS           reduce using rule 6 (prop -> INTEGER .)
+    $end            reduce using rule 6 (prop -> INTEGER .)
+    RIGHT_PARENTHESIS reduce using rule 6 (prop -> INTEGER .)
 
 
 state 6
 
-    (11) prop -> FALSE .
+    (7) prop -> REAL .
 
-    CONJUNCTION     reduce using rule 11 (prop -> FALSE .)
-    DISJUNCTION     reduce using rule 11 (prop -> FALSE .)
-    MATERIAL_IMPLICATION reduce using rule 11 (prop -> FALSE .)
-    BICONDITIONAL   reduce using rule 11 (prop -> FALSE .)
-    $end            reduce using rule 11 (prop -> FALSE .)
-    RIGHT_PARENTHESIS reduce using rule 11 (prop -> FALSE .)
+    PLUS            reduce using rule 7 (prop -> REAL .)
+    MINUS           reduce using rule 7 (prop -> REAL .)
+    $end            reduce using rule 7 (prop -> REAL .)
+    RIGHT_PARENTHESIS reduce using rule 7 (prop -> REAL .)
 
 
 state 7
 
-    (5) prop -> NEGATION . prop
-    (5) prop -> . NEGATION prop
-    (6) prop -> . prop CONJUNCTION prop
-    (7) prop -> . prop DISJUNCTION prop
-    (8) prop -> . prop MATERIAL_IMPLICATION prop
-    (9) prop -> . prop BICONDITIONAL prop
-    (10) prop -> . TRUE
-    (11) prop -> . FALSE
-    (12) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
-    (13) prop -> . VARIABLE
+    (2) prop -> prop PLUS . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . MINUS prop
+    (5) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (6) prop -> . INTEGER
+    (7) prop -> . REAL
 
-    NEGATION        shift and go to state 7
-    TRUE            shift and go to state 5
-    FALSE           shift and go to state 6
-    LEFT_PARENTHESIS shift and go to state 8
-    VARIABLE        shift and go to state 15
+    MINUS           shift and go to state 3
+    LEFT_PARENTHESIS shift and go to state 4
+    INTEGER         shift and go to state 5
+    REAL            shift and go to state 6
 
-    prop                           shift and go to state 14
+    prop                           shift and go to state 11
 
 state 8
 
-    (12) prop -> LEFT_PARENTHESIS . prop RIGHT_PARENTHESIS
-    (5) prop -> . NEGATION prop
-    (6) prop -> . prop CONJUNCTION prop
-    (7) prop -> . prop DISJUNCTION prop
-    (8) prop -> . prop MATERIAL_IMPLICATION prop
-    (9) prop -> . prop BICONDITIONAL prop
-    (10) prop -> . TRUE
-    (11) prop -> . FALSE
-    (12) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
-    (13) prop -> . VARIABLE
+    (3) prop -> prop MINUS . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . MINUS prop
+    (5) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (6) prop -> . INTEGER
+    (7) prop -> . REAL
 
-    NEGATION        shift and go to state 7
-    TRUE            shift and go to state 5
-    FALSE           shift and go to state 6
-    LEFT_PARENTHESIS shift and go to state 8
-    VARIABLE        shift and go to state 15
+    MINUS           shift and go to state 3
+    LEFT_PARENTHESIS shift and go to state 4
+    INTEGER         shift and go to state 5
+    REAL            shift and go to state 6
 
-    prop                           shift and go to state 16
+    prop                           shift and go to state 12
 
 state 9
 
-    (6) prop -> prop CONJUNCTION . prop
-    (5) prop -> . NEGATION prop
-    (6) prop -> . prop CONJUNCTION prop
-    (7) prop -> . prop DISJUNCTION prop
-    (8) prop -> . prop MATERIAL_IMPLICATION prop
-    (9) prop -> . prop BICONDITIONAL prop
-    (10) prop -> . TRUE
-    (11) prop -> . FALSE
-    (12) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
-    (13) prop -> . VARIABLE
+    (4) prop -> MINUS prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
 
-    NEGATION        shift and go to state 7
-    TRUE            shift and go to state 5
-    FALSE           shift and go to state 6
-    LEFT_PARENTHESIS shift and go to state 8
-    VARIABLE        shift and go to state 15
+    PLUS            reduce using rule 4 (prop -> MINUS prop .)
+    MINUS           reduce using rule 4 (prop -> MINUS prop .)
+    $end            reduce using rule 4 (prop -> MINUS prop .)
+    RIGHT_PARENTHESIS reduce using rule 4 (prop -> MINUS prop .)
 
-    prop                           shift and go to state 17
+  ! PLUS            [ shift and go to state 7 ]
+  ! MINUS           [ shift and go to state 8 ]
+
 
 state 10
 
-    (7) prop -> prop DISJUNCTION . prop
-    (5) prop -> . NEGATION prop
-    (6) prop -> . prop CONJUNCTION prop
-    (7) prop -> . prop DISJUNCTION prop
-    (8) prop -> . prop MATERIAL_IMPLICATION prop
-    (9) prop -> . prop BICONDITIONAL prop
-    (10) prop -> . TRUE
-    (11) prop -> . FALSE
-    (12) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
-    (13) prop -> . VARIABLE
+    (5) prop -> LEFT_PARENTHESIS prop . RIGHT_PARENTHESIS
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
 
-    NEGATION        shift and go to state 7
-    TRUE            shift and go to state 5
-    FALSE           shift and go to state 6
-    LEFT_PARENTHESIS shift and go to state 8
-    VARIABLE        shift and go to state 15
+    RIGHT_PARENTHESIS shift and go to state 13
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 8
 
-    prop                           shift and go to state 18
 
 state 11
 
-    (8) prop -> prop MATERIAL_IMPLICATION . prop
-    (5) prop -> . NEGATION prop
-    (6) prop -> . prop CONJUNCTION prop
-    (7) prop -> . prop DISJUNCTION prop
-    (8) prop -> . prop MATERIAL_IMPLICATION prop
-    (9) prop -> . prop BICONDITIONAL prop
-    (10) prop -> . TRUE
-    (11) prop -> . FALSE
-    (12) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
-    (13) prop -> . VARIABLE
+    (2) prop -> prop PLUS prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
 
-    NEGATION        shift and go to state 7
-    TRUE            shift and go to state 5
-    FALSE           shift and go to state 6
-    LEFT_PARENTHESIS shift and go to state 8
-    VARIABLE        shift and go to state 15
+    PLUS            reduce using rule 2 (prop -> prop PLUS prop .)
+    MINUS           reduce using rule 2 (prop -> prop PLUS prop .)
+    $end            reduce using rule 2 (prop -> prop PLUS prop .)
+    RIGHT_PARENTHESIS reduce using rule 2 (prop -> prop PLUS prop .)
 
-    prop                           shift and go to state 19
+  ! PLUS            [ shift and go to state 7 ]
+  ! MINUS           [ shift and go to state 8 ]
+
 
 state 12
 
-    (9) prop -> prop BICONDITIONAL . prop
-    (5) prop -> . NEGATION prop
-    (6) prop -> . prop CONJUNCTION prop
-    (7) prop -> . prop DISJUNCTION prop
-    (8) prop -> . prop MATERIAL_IMPLICATION prop
-    (9) prop -> . prop BICONDITIONAL prop
-    (10) prop -> . TRUE
-    (11) prop -> . FALSE
-    (12) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
-    (13) prop -> . VARIABLE
+    (3) prop -> prop MINUS prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
 
-    NEGATION        shift and go to state 7
-    TRUE            shift and go to state 5
-    FALSE           shift and go to state 6
-    LEFT_PARENTHESIS shift and go to state 8
-    VARIABLE        shift and go to state 15
+    PLUS            reduce using rule 3 (prop -> prop MINUS prop .)
+    MINUS           reduce using rule 3 (prop -> prop MINUS prop .)
+    $end            reduce using rule 3 (prop -> prop MINUS prop .)
+    RIGHT_PARENTHESIS reduce using rule 3 (prop -> prop MINUS prop .)
 
-    prop                           shift and go to state 20
+  ! PLUS            [ shift and go to state 7 ]
+  ! MINUS           [ shift and go to state 8 ]
+
 
 state 13
 
-    (3) stat -> VARIABLE EQUALS . TRUE
-    (4) stat -> VARIABLE EQUALS . FALSE
+    (5) prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .
 
-    TRUE            shift and go to state 21
-    FALSE           shift and go to state 22
-
-
-state 14
-
-    (5) prop -> NEGATION prop .
-    (6) prop -> prop . CONJUNCTION prop
-    (7) prop -> prop . DISJUNCTION prop
-    (8) prop -> prop . MATERIAL_IMPLICATION prop
-    (9) prop -> prop . BICONDITIONAL prop
-
-    CONJUNCTION     reduce using rule 5 (prop -> NEGATION prop .)
-    DISJUNCTION     reduce using rule 5 (prop -> NEGATION prop .)
-    MATERIAL_IMPLICATION reduce using rule 5 (prop -> NEGATION prop .)
-    BICONDITIONAL   reduce using rule 5 (prop -> NEGATION prop .)
-    $end            reduce using rule 5 (prop -> NEGATION prop .)
-    RIGHT_PARENTHESIS reduce using rule 5 (prop -> NEGATION prop .)
-
-  ! CONJUNCTION     [ shift and go to state 9 ]
-  ! DISJUNCTION     [ shift and go to state 10 ]
-  ! MATERIAL_IMPLICATION [ shift and go to state 11 ]
-  ! BICONDITIONAL   [ shift and go to state 12 ]
-
-
-state 15
-
-    (13) prop -> VARIABLE .
-
-    CONJUNCTION     reduce using rule 13 (prop -> VARIABLE .)
-    DISJUNCTION     reduce using rule 13 (prop -> VARIABLE .)
-    MATERIAL_IMPLICATION reduce using rule 13 (prop -> VARIABLE .)
-    BICONDITIONAL   reduce using rule 13 (prop -> VARIABLE .)
-    $end            reduce using rule 13 (prop -> VARIABLE .)
-    RIGHT_PARENTHESIS reduce using rule 13 (prop -> VARIABLE .)
-
-
-state 16
-
-    (12) prop -> LEFT_PARENTHESIS prop . RIGHT_PARENTHESIS
-    (6) prop -> prop . CONJUNCTION prop
-    (7) prop -> prop . DISJUNCTION prop
-    (8) prop -> prop . MATERIAL_IMPLICATION prop
-    (9) prop -> prop . BICONDITIONAL prop
-
-    RIGHT_PARENTHESIS shift and go to state 23
-    CONJUNCTION     shift and go to state 9
-    DISJUNCTION     shift and go to state 10
-    MATERIAL_IMPLICATION shift and go to state 11
-    BICONDITIONAL   shift and go to state 12
-
-
-state 17
-
-    (6) prop -> prop CONJUNCTION prop .
-    (6) prop -> prop . CONJUNCTION prop
-    (7) prop -> prop . DISJUNCTION prop
-    (8) prop -> prop . MATERIAL_IMPLICATION prop
-    (9) prop -> prop . BICONDITIONAL prop
-
-    DISJUNCTION     reduce using rule 6 (prop -> prop CONJUNCTION prop .)
-    MATERIAL_IMPLICATION reduce using rule 6 (prop -> prop CONJUNCTION prop .)
-    BICONDITIONAL   reduce using rule 6 (prop -> prop CONJUNCTION prop .)
-    $end            reduce using rule 6 (prop -> prop CONJUNCTION prop .)
-    RIGHT_PARENTHESIS reduce using rule 6 (prop -> prop CONJUNCTION prop .)
-    CONJUNCTION     shift and go to state 9
-
-  ! CONJUNCTION     [ reduce using rule 6 (prop -> prop CONJUNCTION prop .) ]
-  ! DISJUNCTION     [ shift and go to state 10 ]
-  ! MATERIAL_IMPLICATION [ shift and go to state 11 ]
-  ! BICONDITIONAL   [ shift and go to state 12 ]
-
-
-state 18
-
-    (7) prop -> prop DISJUNCTION prop .
-    (6) prop -> prop . CONJUNCTION prop
-    (7) prop -> prop . DISJUNCTION prop
-    (8) prop -> prop . MATERIAL_IMPLICATION prop
-    (9) prop -> prop . BICONDITIONAL prop
-
-    MATERIAL_IMPLICATION reduce using rule 7 (prop -> prop DISJUNCTION prop .)
-    BICONDITIONAL   reduce using rule 7 (prop -> prop DISJUNCTION prop .)
-    $end            reduce using rule 7 (prop -> prop DISJUNCTION prop .)
-    RIGHT_PARENTHESIS reduce using rule 7 (prop -> prop DISJUNCTION prop .)
-    CONJUNCTION     shift and go to state 9
-    DISJUNCTION     shift and go to state 10
-
-  ! CONJUNCTION     [ reduce using rule 7 (prop -> prop DISJUNCTION prop .) ]
-  ! DISJUNCTION     [ reduce using rule 7 (prop -> prop DISJUNCTION prop .) ]
-  ! MATERIAL_IMPLICATION [ shift and go to state 11 ]
-  ! BICONDITIONAL   [ shift and go to state 12 ]
-
-
-state 19
-
-    (8) prop -> prop MATERIAL_IMPLICATION prop .
-    (6) prop -> prop . CONJUNCTION prop
-    (7) prop -> prop . DISJUNCTION prop
-    (8) prop -> prop . MATERIAL_IMPLICATION prop
-    (9) prop -> prop . BICONDITIONAL prop
-
-    BICONDITIONAL   reduce using rule 8 (prop -> prop MATERIAL_IMPLICATION prop .)
-    $end            reduce using rule 8 (prop -> prop MATERIAL_IMPLICATION prop .)
-    RIGHT_PARENTHESIS reduce using rule 8 (prop -> prop MATERIAL_IMPLICATION prop .)
-    CONJUNCTION     shift and go to state 9
-    DISJUNCTION     shift and go to state 10
-    MATERIAL_IMPLICATION shift and go to state 11
-
-  ! CONJUNCTION     [ reduce using rule 8 (prop -> prop MATERIAL_IMPLICATION prop .) ]
-  ! DISJUNCTION     [ reduce using rule 8 (prop -> prop MATERIAL_IMPLICATION prop .) ]
-  ! MATERIAL_IMPLICATION [ reduce using rule 8 (prop -> prop MATERIAL_IMPLICATION prop .) ]
-  ! BICONDITIONAL   [ shift and go to state 12 ]
-
-
-state 20
-
-    (9) prop -> prop BICONDITIONAL prop .
-    (6) prop -> prop . CONJUNCTION prop
-    (7) prop -> prop . DISJUNCTION prop
-    (8) prop -> prop . MATERIAL_IMPLICATION prop
-    (9) prop -> prop . BICONDITIONAL prop
-
-    $end            reduce using rule 9 (prop -> prop BICONDITIONAL prop .)
-    RIGHT_PARENTHESIS reduce using rule 9 (prop -> prop BICONDITIONAL prop .)
-    CONJUNCTION     shift and go to state 9
-    DISJUNCTION     shift and go to state 10
-    MATERIAL_IMPLICATION shift and go to state 11
-    BICONDITIONAL   shift and go to state 12
-
-  ! CONJUNCTION     [ reduce using rule 9 (prop -> prop BICONDITIONAL prop .) ]
-  ! DISJUNCTION     [ reduce using rule 9 (prop -> prop BICONDITIONAL prop .) ]
-  ! MATERIAL_IMPLICATION [ reduce using rule 9 (prop -> prop BICONDITIONAL prop .) ]
-  ! BICONDITIONAL   [ reduce using rule 9 (prop -> prop BICONDITIONAL prop .) ]
-
-
-state 21
-
-    (3) stat -> VARIABLE EQUALS TRUE .
-
-    $end            reduce using rule 3 (stat -> VARIABLE EQUALS TRUE .)
-
-
-state 22
-
-    (4) stat -> VARIABLE EQUALS FALSE .
-
-    $end            reduce using rule 4 (stat -> VARIABLE EQUALS FALSE .)
-
-
-state 23
-
-    (12) prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .
-
-    CONJUNCTION     reduce using rule 12 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
-    DISJUNCTION     reduce using rule 12 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
-    MATERIAL_IMPLICATION reduce using rule 12 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
-    BICONDITIONAL   reduce using rule 12 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
-    $end            reduce using rule 12 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
-    RIGHT_PARENTHESIS reduce using rule 12 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    PLUS            reduce using rule 5 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    MINUS           reduce using rule 5 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    $end            reduce using rule 5 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    RIGHT_PARENTHESIS reduce using rule 5 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
 

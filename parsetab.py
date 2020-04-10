@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'rightBICONDITIONALrightMATERIAL_IMPLICATIONrightDISJUNCTIONrightCONJUNCTIONrightNEGATIONBICONDITIONAL CONJUNCTION DISJUNCTION EQUALS FALSE LEFT_PARENTHESIS MATERIAL_IMPLICATION NEGATION RIGHT_PARENTHESIS TRUE VARIABLEexpr : stat\n            | propstat : VARIABLE EQUALS TRUEstat : VARIABLE EQUALS FALSEprop : NEGATION propprop : prop CONJUNCTION propprop : prop DISJUNCTION propprop : prop MATERIAL_IMPLICATION propprop : prop BICONDITIONAL propprop : TRUEprop : FALSEprop : LEFT_PARENTHESIS prop RIGHT_PARENTHESISprop : VARIABLE'
+_lr_signature = 'leftDISJUNCTIONleftCONJUNCTIONleftNEGATIONleftLESS_THANLESS_THAN_EQUAL_TOEQUAL_TONOT_EQUAL_TOGREATER_THAN_EQUAL_TOGREATER_THANrightCONSleftINleftPLUSMINUSleftTIMESDIVIDEINT_DIVIDEMODrightUMINUSrightRAISED_TO_POWER_OFCOMMA CONJUNCTION CONS DISJUNCTION DIVIDE EQUAL_TO FALSE GREATER_THAN GREATER_THAN_EQUAL_TO HASHTAG IN INTEGER INT_DIVIDE LEFT_BRACKET LEFT_PARENTHESIS LESS_THAN LESS_THAN_EQUAL_TO MINUS MOD NEGATION NOT_EQUAL_TO PLUS RAISED_TO_POWER_OF REAL RIGHT_BRACKET RIGHT_PARENTHESIS STRING TIMES TRUEexpr : propprop : prop PLUS propprop : prop MINUS propprop : MINUS prop %prec UMINUSprop : LEFT_PARENTHESIS prop RIGHT_PARENTHESISprop : INTEGERprop : REAL'
     
-_lr_action_items = {'VARIABLE':([0,7,8,9,10,11,12,],[4,15,15,15,15,15,15,]),'NEGATION':([0,7,8,9,10,11,12,],[7,7,7,7,7,7,7,]),'TRUE':([0,7,8,9,10,11,12,13,],[5,5,5,5,5,5,5,21,]),'FALSE':([0,7,8,9,10,11,12,13,],[6,6,6,6,6,6,6,22,]),'LEFT_PARENTHESIS':([0,7,8,9,10,11,12,],[8,8,8,8,8,8,8,]),'$end':([1,2,3,4,5,6,14,15,17,18,19,20,21,22,23,],[0,-1,-2,-13,-10,-11,-5,-13,-6,-7,-8,-9,-3,-4,-12,]),'CONJUNCTION':([3,4,5,6,14,15,16,17,18,19,20,23,],[9,-13,-10,-11,-5,-13,9,9,9,9,9,-12,]),'DISJUNCTION':([3,4,5,6,14,15,16,17,18,19,20,23,],[10,-13,-10,-11,-5,-13,10,-6,10,10,10,-12,]),'MATERIAL_IMPLICATION':([3,4,5,6,14,15,16,17,18,19,20,23,],[11,-13,-10,-11,-5,-13,11,-6,-7,11,11,-12,]),'BICONDITIONAL':([3,4,5,6,14,15,16,17,18,19,20,23,],[12,-13,-10,-11,-5,-13,12,-6,-7,-8,12,-12,]),'EQUALS':([4,],[13,]),'RIGHT_PARENTHESIS':([5,6,14,15,16,17,18,19,20,23,],[-10,-11,-5,-13,23,-6,-7,-8,-9,-12,]),}
+_lr_action_items = {'MINUS':([0,2,3,4,5,6,7,8,9,10,11,12,13,],[3,8,3,3,-6,-7,3,3,-4,8,-2,-3,-5,]),'LEFT_PARENTHESIS':([0,3,4,7,8,],[4,4,4,4,4,]),'INTEGER':([0,3,4,7,8,],[5,5,5,5,5,]),'REAL':([0,3,4,7,8,],[6,6,6,6,6,]),'$end':([1,2,5,6,9,11,12,13,],[0,-1,-6,-7,-4,-2,-3,-5,]),'PLUS':([2,5,6,9,10,11,12,13,],[7,-6,-7,-4,7,-2,-3,-5,]),'RIGHT_PARENTHESIS':([5,6,9,10,11,12,13,],[-6,-7,-4,13,-2,-3,-5,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expr':([0,],[1,]),'stat':([0,],[2,]),'prop':([0,7,8,9,10,11,12,],[3,14,16,17,18,19,20,]),}
+_lr_goto_items = {'expr':([0,],[1,]),'prop':([0,3,4,7,8,],[2,9,10,11,12,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,17 +27,11 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> expr","S'",1,None,None,None),
-  ('expr -> stat','expr',1,'p_expr','TTgrammar.py',231),
-  ('expr -> prop','expr',1,'p_expr','TTgrammar.py',232),
-  ('stat -> VARIABLE EQUALS TRUE','stat',3,'p_stat_assign_true','TTgrammar.py',236),
-  ('stat -> VARIABLE EQUALS FALSE','stat',3,'p_stat_assign_false','TTgrammar.py',241),
-  ('prop -> NEGATION prop','prop',2,'p_prop_negation','TTgrammar.py',246),
-  ('prop -> prop CONJUNCTION prop','prop',3,'p_prop_conjunction','TTgrammar.py',250),
-  ('prop -> prop DISJUNCTION prop','prop',3,'p_prop_disjunction','TTgrammar.py',254),
-  ('prop -> prop MATERIAL_IMPLICATION prop','prop',3,'p_prop_materialImplication','TTgrammar.py',258),
-  ('prop -> prop BICONDITIONAL prop','prop',3,'p_prop_biconditional','TTgrammar.py',262),
-  ('prop -> TRUE','prop',1,'p_prop_true','TTgrammar.py',266),
-  ('prop -> FALSE','prop',1,'p_prop_false','TTgrammar.py',270),
-  ('prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS','prop',3,'p_prop_parenthetical','TTgrammar.py',274),
-  ('prop -> VARIABLE','prop',1,'p_prop_variable','TTgrammar.py',278),
+  ('expr -> prop','expr',1,'p_expr','sbml.py',204),
+  ('prop -> prop PLUS prop','prop',3,'p_prop_plus','sbml.py',209),
+  ('prop -> prop MINUS prop','prop',3,'p_prop_minus','sbml.py',214),
+  ('prop -> MINUS prop','prop',2,'p_prop_uminus','sbml.py',219),
+  ('prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS','prop',3,'p_prop_parenthetical','sbml.py',224),
+  ('prop -> INTEGER','prop',1,'p_prop_integer','sbml.py',239),
+  ('prop -> REAL','prop',1,'p_prop_real','sbml.py',244),
 ]
