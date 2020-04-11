@@ -2,29 +2,7 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    COMMA
-    CONJUNCTION
-    CONS
-    DISJUNCTION
-    DIVIDE
-    EQUAL_TO
-    FALSE
-    GREATER_THAN
-    GREATER_THAN_EQUAL_TO
-    HASHTAG
-    IN
-    INT_DIVIDE
-    LEFT_BRACKET
-    LESS_THAN
-    LESS_THAN_EQUAL_TO
-    MOD
-    NEGATION
-    NOT_EQUAL_TO
     RAISED_TO_POWER_OF
-    RIGHT_BRACKET
-    STRING
-    TIMES
-    TRUE
 
 Grammar
 
@@ -32,48 +10,78 @@ Rule 0     S' -> expr
 Rule 1     expr -> prop
 Rule 2     prop -> prop PLUS prop
 Rule 3     prop -> prop MINUS prop
-Rule 4     prop -> MINUS prop
-Rule 5     prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
-Rule 6     prop -> INTEGER
-Rule 7     prop -> REAL
+Rule 4     prop -> prop TIMES prop
+Rule 5     prop -> prop DIVIDE prop
+Rule 6     prop -> prop INT_DIVIDE prop
+Rule 7     prop -> prop MOD prop
+Rule 8     prop -> prop IN prop
+Rule 9     prop -> MINUS INTEGER
+Rule 10    prop -> prop LESS_THAN prop
+Rule 11    prop -> prop LESS_THAN_EQUAL_TO prop
+Rule 12    prop -> prop EQUAL_TO prop
+Rule 13    prop -> prop NOT_EQUAL_TO prop
+Rule 14    prop -> prop GREATER_THAN_EQUAL_TO prop
+Rule 15    prop -> prop GREATER_THAN prop
+Rule 16    prop -> prop CONS prop
+Rule 17    prop -> NEGATION prop
+Rule 18    prop -> prop CONJUNCTION prop
+Rule 19    prop -> prop DISJUNCTION prop
+Rule 20    prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+Rule 21    prop -> TRUE
+Rule 22    prop -> FALSE
+Rule 23    prop -> INTEGER
+Rule 24    prop -> REAL
+Rule 25    prop -> STRING
+Rule 26    prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET
+Rule 27    prop -> LEFT_BRACKET RIGHT_BRACKET
+Rule 28    prop_contents -> prop
+Rule 29    prop_contents -> prop COMMA prop_contents
+Rule 30    prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+Rule 31    prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+Rule 32    prop_tup_contents -> prop
+Rule 33    prop_tup_contents -> prop COMMA prop_tup_contents
+Rule 34    prop -> HASHTAG prop prop
+Rule 35    prop -> prop LEFT_BRACKET prop RIGHT_BRACKET
 
 Terminals, with rules where they appear
 
-COMMA                : 
-CONJUNCTION          : 
-CONS                 : 
-DISJUNCTION          : 
-DIVIDE               : 
-EQUAL_TO             : 
-FALSE                : 
-GREATER_THAN         : 
-GREATER_THAN_EQUAL_TO : 
-HASHTAG              : 
-IN                   : 
-INTEGER              : 6
-INT_DIVIDE           : 
-LEFT_BRACKET         : 
-LEFT_PARENTHESIS     : 5
-LESS_THAN            : 
-LESS_THAN_EQUAL_TO   : 
-MINUS                : 3 4
-MOD                  : 
-NEGATION             : 
-NOT_EQUAL_TO         : 
+COMMA                : 29 30 31 33
+CONJUNCTION          : 18
+CONS                 : 16
+DISJUNCTION          : 19
+DIVIDE               : 5
+EQUAL_TO             : 12
+FALSE                : 22
+GREATER_THAN         : 15
+GREATER_THAN_EQUAL_TO : 14
+HASHTAG              : 34
+IN                   : 8
+INTEGER              : 9 23
+INT_DIVIDE           : 6
+LEFT_BRACKET         : 26 27 35
+LEFT_PARENTHESIS     : 20 30 31
+LESS_THAN            : 10
+LESS_THAN_EQUAL_TO   : 11
+MINUS                : 3 9
+MOD                  : 7
+NEGATION             : 17
+NOT_EQUAL_TO         : 13
 PLUS                 : 2
 RAISED_TO_POWER_OF   : 
-REAL                 : 7
-RIGHT_BRACKET        : 
-RIGHT_PARENTHESIS    : 5
-STRING               : 
-TIMES                : 
-TRUE                 : 
+REAL                 : 24
+RIGHT_BRACKET        : 26 27 35
+RIGHT_PARENTHESIS    : 20 30 31
+STRING               : 25
+TIMES                : 4
+TRUE                 : 21
 error                : 
 
 Nonterminals, with rules where they appear
 
 expr                 : 0
-prop                 : 1 2 2 3 3 4 5
+prop                 : 1 2 2 3 3 4 4 5 5 6 6 7 7 8 8 10 10 11 11 12 12 13 13 14 14 15 15 16 16 17 18 18 19 19 20 28 29 30 31 32 33 34 34 35 35
+prop_contents        : 26 29
+prop_tup_contents    : 30 33
 
 Parsing method: LALR
 
@@ -83,15 +91,45 @@ state 0
     (1) expr -> . prop
     (2) prop -> . prop PLUS prop
     (3) prop -> . prop MINUS prop
-    (4) prop -> . MINUS prop
-    (5) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
-    (6) prop -> . INTEGER
-    (7) prop -> . REAL
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
 
     MINUS           shift and go to state 3
-    LEFT_PARENTHESIS shift and go to state 4
-    INTEGER         shift and go to state 5
-    REAL            shift and go to state 6
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
 
     expr                           shift and go to state 1
     prop                           shift and go to state 2
@@ -107,162 +145,3398 @@ state 2
     (1) expr -> prop .
     (2) prop -> prop . PLUS prop
     (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
 
     $end            reduce using rule 1 (expr -> prop .)
-    PLUS            shift and go to state 7
-    MINUS           shift and go to state 8
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+    IN              shift and go to state 19
+    LESS_THAN       shift and go to state 20
+    LESS_THAN_EQUAL_TO shift and go to state 21
+    EQUAL_TO        shift and go to state 22
+    NOT_EQUAL_TO    shift and go to state 23
+    GREATER_THAN_EQUAL_TO shift and go to state 24
+    GREATER_THAN    shift and go to state 25
+    CONS            shift and go to state 26
+    CONJUNCTION     shift and go to state 27
+    DISJUNCTION     shift and go to state 28
+    LEFT_BRACKET    shift and go to state 29
 
 
 state 3
 
-    (4) prop -> MINUS . prop
-    (2) prop -> . prop PLUS prop
-    (3) prop -> . prop MINUS prop
-    (4) prop -> . MINUS prop
-    (5) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
-    (6) prop -> . INTEGER
-    (7) prop -> . REAL
+    (9) prop -> MINUS . INTEGER
 
-    MINUS           shift and go to state 3
-    LEFT_PARENTHESIS shift and go to state 4
-    INTEGER         shift and go to state 5
-    REAL            shift and go to state 6
+    INTEGER         shift and go to state 30
 
-    prop                           shift and go to state 9
 
 state 4
 
-    (5) prop -> LEFT_PARENTHESIS . prop RIGHT_PARENTHESIS
-    (2) prop -> . prop PLUS prop
-    (3) prop -> . prop MINUS prop
-    (4) prop -> . MINUS prop
-    (5) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
-    (6) prop -> . INTEGER
-    (7) prop -> . REAL
+    (23) prop -> INTEGER .
 
-    MINUS           shift and go to state 3
-    LEFT_PARENTHESIS shift and go to state 4
-    INTEGER         shift and go to state 5
-    REAL            shift and go to state 6
+    PLUS            reduce using rule 23 (prop -> INTEGER .)
+    MINUS           reduce using rule 23 (prop -> INTEGER .)
+    TIMES           reduce using rule 23 (prop -> INTEGER .)
+    DIVIDE          reduce using rule 23 (prop -> INTEGER .)
+    INT_DIVIDE      reduce using rule 23 (prop -> INTEGER .)
+    MOD             reduce using rule 23 (prop -> INTEGER .)
+    IN              reduce using rule 23 (prop -> INTEGER .)
+    LESS_THAN       reduce using rule 23 (prop -> INTEGER .)
+    LESS_THAN_EQUAL_TO reduce using rule 23 (prop -> INTEGER .)
+    EQUAL_TO        reduce using rule 23 (prop -> INTEGER .)
+    NOT_EQUAL_TO    reduce using rule 23 (prop -> INTEGER .)
+    GREATER_THAN_EQUAL_TO reduce using rule 23 (prop -> INTEGER .)
+    GREATER_THAN    reduce using rule 23 (prop -> INTEGER .)
+    CONS            reduce using rule 23 (prop -> INTEGER .)
+    CONJUNCTION     reduce using rule 23 (prop -> INTEGER .)
+    DISJUNCTION     reduce using rule 23 (prop -> INTEGER .)
+    LEFT_BRACKET    reduce using rule 23 (prop -> INTEGER .)
+    $end            reduce using rule 23 (prop -> INTEGER .)
+    RIGHT_PARENTHESIS reduce using rule 23 (prop -> INTEGER .)
+    COMMA           reduce using rule 23 (prop -> INTEGER .)
+    RIGHT_BRACKET   reduce using rule 23 (prop -> INTEGER .)
+    NEGATION        reduce using rule 23 (prop -> INTEGER .)
+    LEFT_PARENTHESIS reduce using rule 23 (prop -> INTEGER .)
+    TRUE            reduce using rule 23 (prop -> INTEGER .)
+    FALSE           reduce using rule 23 (prop -> INTEGER .)
+    INTEGER         reduce using rule 23 (prop -> INTEGER .)
+    REAL            reduce using rule 23 (prop -> INTEGER .)
+    STRING          reduce using rule 23 (prop -> INTEGER .)
+    HASHTAG         reduce using rule 23 (prop -> INTEGER .)
 
-    prop                           shift and go to state 10
 
 state 5
 
-    (6) prop -> INTEGER .
+    (17) prop -> NEGATION . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
 
-    PLUS            reduce using rule 6 (prop -> INTEGER .)
-    MINUS           reduce using rule 6 (prop -> INTEGER .)
-    $end            reduce using rule 6 (prop -> INTEGER .)
-    RIGHT_PARENTHESIS reduce using rule 6 (prop -> INTEGER .)
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
 
+    prop                           shift and go to state 31
 
 state 6
 
-    (7) prop -> REAL .
+    (20) prop -> LEFT_PARENTHESIS . prop RIGHT_PARENTHESIS
+    (30) prop -> LEFT_PARENTHESIS . prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> LEFT_PARENTHESIS . prop COMMA RIGHT_PARENTHESIS
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
 
-    PLUS            reduce using rule 7 (prop -> REAL .)
-    MINUS           reduce using rule 7 (prop -> REAL .)
-    $end            reduce using rule 7 (prop -> REAL .)
-    RIGHT_PARENTHESIS reduce using rule 7 (prop -> REAL .)
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
 
+    prop                           shift and go to state 32
 
 state 7
 
-    (2) prop -> prop PLUS . prop
-    (2) prop -> . prop PLUS prop
-    (3) prop -> . prop MINUS prop
-    (4) prop -> . MINUS prop
-    (5) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
-    (6) prop -> . INTEGER
-    (7) prop -> . REAL
+    (21) prop -> TRUE .
 
-    MINUS           shift and go to state 3
-    LEFT_PARENTHESIS shift and go to state 4
-    INTEGER         shift and go to state 5
-    REAL            shift and go to state 6
+    PLUS            reduce using rule 21 (prop -> TRUE .)
+    MINUS           reduce using rule 21 (prop -> TRUE .)
+    TIMES           reduce using rule 21 (prop -> TRUE .)
+    DIVIDE          reduce using rule 21 (prop -> TRUE .)
+    INT_DIVIDE      reduce using rule 21 (prop -> TRUE .)
+    MOD             reduce using rule 21 (prop -> TRUE .)
+    IN              reduce using rule 21 (prop -> TRUE .)
+    LESS_THAN       reduce using rule 21 (prop -> TRUE .)
+    LESS_THAN_EQUAL_TO reduce using rule 21 (prop -> TRUE .)
+    EQUAL_TO        reduce using rule 21 (prop -> TRUE .)
+    NOT_EQUAL_TO    reduce using rule 21 (prop -> TRUE .)
+    GREATER_THAN_EQUAL_TO reduce using rule 21 (prop -> TRUE .)
+    GREATER_THAN    reduce using rule 21 (prop -> TRUE .)
+    CONS            reduce using rule 21 (prop -> TRUE .)
+    CONJUNCTION     reduce using rule 21 (prop -> TRUE .)
+    DISJUNCTION     reduce using rule 21 (prop -> TRUE .)
+    LEFT_BRACKET    reduce using rule 21 (prop -> TRUE .)
+    $end            reduce using rule 21 (prop -> TRUE .)
+    RIGHT_PARENTHESIS reduce using rule 21 (prop -> TRUE .)
+    COMMA           reduce using rule 21 (prop -> TRUE .)
+    RIGHT_BRACKET   reduce using rule 21 (prop -> TRUE .)
+    NEGATION        reduce using rule 21 (prop -> TRUE .)
+    LEFT_PARENTHESIS reduce using rule 21 (prop -> TRUE .)
+    TRUE            reduce using rule 21 (prop -> TRUE .)
+    FALSE           reduce using rule 21 (prop -> TRUE .)
+    INTEGER         reduce using rule 21 (prop -> TRUE .)
+    REAL            reduce using rule 21 (prop -> TRUE .)
+    STRING          reduce using rule 21 (prop -> TRUE .)
+    HASHTAG         reduce using rule 21 (prop -> TRUE .)
 
-    prop                           shift and go to state 11
 
 state 8
 
-    (3) prop -> prop MINUS . prop
-    (2) prop -> . prop PLUS prop
-    (3) prop -> . prop MINUS prop
-    (4) prop -> . MINUS prop
-    (5) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
-    (6) prop -> . INTEGER
-    (7) prop -> . REAL
+    (22) prop -> FALSE .
 
-    MINUS           shift and go to state 3
-    LEFT_PARENTHESIS shift and go to state 4
-    INTEGER         shift and go to state 5
-    REAL            shift and go to state 6
+    PLUS            reduce using rule 22 (prop -> FALSE .)
+    MINUS           reduce using rule 22 (prop -> FALSE .)
+    TIMES           reduce using rule 22 (prop -> FALSE .)
+    DIVIDE          reduce using rule 22 (prop -> FALSE .)
+    INT_DIVIDE      reduce using rule 22 (prop -> FALSE .)
+    MOD             reduce using rule 22 (prop -> FALSE .)
+    IN              reduce using rule 22 (prop -> FALSE .)
+    LESS_THAN       reduce using rule 22 (prop -> FALSE .)
+    LESS_THAN_EQUAL_TO reduce using rule 22 (prop -> FALSE .)
+    EQUAL_TO        reduce using rule 22 (prop -> FALSE .)
+    NOT_EQUAL_TO    reduce using rule 22 (prop -> FALSE .)
+    GREATER_THAN_EQUAL_TO reduce using rule 22 (prop -> FALSE .)
+    GREATER_THAN    reduce using rule 22 (prop -> FALSE .)
+    CONS            reduce using rule 22 (prop -> FALSE .)
+    CONJUNCTION     reduce using rule 22 (prop -> FALSE .)
+    DISJUNCTION     reduce using rule 22 (prop -> FALSE .)
+    LEFT_BRACKET    reduce using rule 22 (prop -> FALSE .)
+    $end            reduce using rule 22 (prop -> FALSE .)
+    RIGHT_PARENTHESIS reduce using rule 22 (prop -> FALSE .)
+    COMMA           reduce using rule 22 (prop -> FALSE .)
+    RIGHT_BRACKET   reduce using rule 22 (prop -> FALSE .)
+    NEGATION        reduce using rule 22 (prop -> FALSE .)
+    LEFT_PARENTHESIS reduce using rule 22 (prop -> FALSE .)
+    TRUE            reduce using rule 22 (prop -> FALSE .)
+    FALSE           reduce using rule 22 (prop -> FALSE .)
+    INTEGER         reduce using rule 22 (prop -> FALSE .)
+    REAL            reduce using rule 22 (prop -> FALSE .)
+    STRING          reduce using rule 22 (prop -> FALSE .)
+    HASHTAG         reduce using rule 22 (prop -> FALSE .)
 
-    prop                           shift and go to state 12
 
 state 9
 
-    (4) prop -> MINUS prop .
-    (2) prop -> prop . PLUS prop
-    (3) prop -> prop . MINUS prop
+    (24) prop -> REAL .
 
-    PLUS            reduce using rule 4 (prop -> MINUS prop .)
-    MINUS           reduce using rule 4 (prop -> MINUS prop .)
-    $end            reduce using rule 4 (prop -> MINUS prop .)
-    RIGHT_PARENTHESIS reduce using rule 4 (prop -> MINUS prop .)
-
-  ! PLUS            [ shift and go to state 7 ]
-  ! MINUS           [ shift and go to state 8 ]
+    PLUS            reduce using rule 24 (prop -> REAL .)
+    MINUS           reduce using rule 24 (prop -> REAL .)
+    TIMES           reduce using rule 24 (prop -> REAL .)
+    DIVIDE          reduce using rule 24 (prop -> REAL .)
+    INT_DIVIDE      reduce using rule 24 (prop -> REAL .)
+    MOD             reduce using rule 24 (prop -> REAL .)
+    IN              reduce using rule 24 (prop -> REAL .)
+    LESS_THAN       reduce using rule 24 (prop -> REAL .)
+    LESS_THAN_EQUAL_TO reduce using rule 24 (prop -> REAL .)
+    EQUAL_TO        reduce using rule 24 (prop -> REAL .)
+    NOT_EQUAL_TO    reduce using rule 24 (prop -> REAL .)
+    GREATER_THAN_EQUAL_TO reduce using rule 24 (prop -> REAL .)
+    GREATER_THAN    reduce using rule 24 (prop -> REAL .)
+    CONS            reduce using rule 24 (prop -> REAL .)
+    CONJUNCTION     reduce using rule 24 (prop -> REAL .)
+    DISJUNCTION     reduce using rule 24 (prop -> REAL .)
+    LEFT_BRACKET    reduce using rule 24 (prop -> REAL .)
+    $end            reduce using rule 24 (prop -> REAL .)
+    RIGHT_PARENTHESIS reduce using rule 24 (prop -> REAL .)
+    COMMA           reduce using rule 24 (prop -> REAL .)
+    RIGHT_BRACKET   reduce using rule 24 (prop -> REAL .)
+    NEGATION        reduce using rule 24 (prop -> REAL .)
+    LEFT_PARENTHESIS reduce using rule 24 (prop -> REAL .)
+    TRUE            reduce using rule 24 (prop -> REAL .)
+    FALSE           reduce using rule 24 (prop -> REAL .)
+    INTEGER         reduce using rule 24 (prop -> REAL .)
+    REAL            reduce using rule 24 (prop -> REAL .)
+    STRING          reduce using rule 24 (prop -> REAL .)
+    HASHTAG         reduce using rule 24 (prop -> REAL .)
 
 
 state 10
 
-    (5) prop -> LEFT_PARENTHESIS prop . RIGHT_PARENTHESIS
-    (2) prop -> prop . PLUS prop
-    (3) prop -> prop . MINUS prop
+    (25) prop -> STRING .
 
-    RIGHT_PARENTHESIS shift and go to state 13
-    PLUS            shift and go to state 7
-    MINUS           shift and go to state 8
+    PLUS            reduce using rule 25 (prop -> STRING .)
+    MINUS           reduce using rule 25 (prop -> STRING .)
+    TIMES           reduce using rule 25 (prop -> STRING .)
+    DIVIDE          reduce using rule 25 (prop -> STRING .)
+    INT_DIVIDE      reduce using rule 25 (prop -> STRING .)
+    MOD             reduce using rule 25 (prop -> STRING .)
+    IN              reduce using rule 25 (prop -> STRING .)
+    LESS_THAN       reduce using rule 25 (prop -> STRING .)
+    LESS_THAN_EQUAL_TO reduce using rule 25 (prop -> STRING .)
+    EQUAL_TO        reduce using rule 25 (prop -> STRING .)
+    NOT_EQUAL_TO    reduce using rule 25 (prop -> STRING .)
+    GREATER_THAN_EQUAL_TO reduce using rule 25 (prop -> STRING .)
+    GREATER_THAN    reduce using rule 25 (prop -> STRING .)
+    CONS            reduce using rule 25 (prop -> STRING .)
+    CONJUNCTION     reduce using rule 25 (prop -> STRING .)
+    DISJUNCTION     reduce using rule 25 (prop -> STRING .)
+    LEFT_BRACKET    reduce using rule 25 (prop -> STRING .)
+    $end            reduce using rule 25 (prop -> STRING .)
+    RIGHT_PARENTHESIS reduce using rule 25 (prop -> STRING .)
+    COMMA           reduce using rule 25 (prop -> STRING .)
+    RIGHT_BRACKET   reduce using rule 25 (prop -> STRING .)
+    NEGATION        reduce using rule 25 (prop -> STRING .)
+    LEFT_PARENTHESIS reduce using rule 25 (prop -> STRING .)
+    TRUE            reduce using rule 25 (prop -> STRING .)
+    FALSE           reduce using rule 25 (prop -> STRING .)
+    INTEGER         reduce using rule 25 (prop -> STRING .)
+    REAL            reduce using rule 25 (prop -> STRING .)
+    STRING          reduce using rule 25 (prop -> STRING .)
+    HASHTAG         reduce using rule 25 (prop -> STRING .)
 
 
 state 11
 
+    (26) prop -> LEFT_BRACKET . prop_contents RIGHT_BRACKET
+    (27) prop -> LEFT_BRACKET . RIGHT_BRACKET
+    (28) prop_contents -> . prop
+    (29) prop_contents -> . prop COMMA prop_contents
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    RIGHT_BRACKET   shift and go to state 34
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop_contents                  shift and go to state 33
+    prop                           shift and go to state 35
+
+state 12
+
+    (34) prop -> HASHTAG . prop prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 36
+
+state 13
+
+    (2) prop -> prop PLUS . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 37
+
+state 14
+
+    (3) prop -> prop MINUS . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 38
+
+state 15
+
+    (4) prop -> prop TIMES . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 39
+
+state 16
+
+    (5) prop -> prop DIVIDE . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 40
+
+state 17
+
+    (6) prop -> prop INT_DIVIDE . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 41
+
+state 18
+
+    (7) prop -> prop MOD . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 42
+
+state 19
+
+    (8) prop -> prop IN . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 43
+
+state 20
+
+    (10) prop -> prop LESS_THAN . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 44
+
+state 21
+
+    (11) prop -> prop LESS_THAN_EQUAL_TO . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 45
+
+state 22
+
+    (12) prop -> prop EQUAL_TO . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 46
+
+state 23
+
+    (13) prop -> prop NOT_EQUAL_TO . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 47
+
+state 24
+
+    (14) prop -> prop GREATER_THAN_EQUAL_TO . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 48
+
+state 25
+
+    (15) prop -> prop GREATER_THAN . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 49
+
+state 26
+
+    (16) prop -> prop CONS . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 50
+
+state 27
+
+    (18) prop -> prop CONJUNCTION . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 51
+
+state 28
+
+    (19) prop -> prop DISJUNCTION . prop
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 52
+
+state 29
+
+    (35) prop -> prop LEFT_BRACKET . prop RIGHT_BRACKET
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 53
+
+state 30
+
+    (9) prop -> MINUS INTEGER .
+
+    PLUS            reduce using rule 9 (prop -> MINUS INTEGER .)
+    MINUS           reduce using rule 9 (prop -> MINUS INTEGER .)
+    TIMES           reduce using rule 9 (prop -> MINUS INTEGER .)
+    DIVIDE          reduce using rule 9 (prop -> MINUS INTEGER .)
+    INT_DIVIDE      reduce using rule 9 (prop -> MINUS INTEGER .)
+    MOD             reduce using rule 9 (prop -> MINUS INTEGER .)
+    IN              reduce using rule 9 (prop -> MINUS INTEGER .)
+    LESS_THAN       reduce using rule 9 (prop -> MINUS INTEGER .)
+    LESS_THAN_EQUAL_TO reduce using rule 9 (prop -> MINUS INTEGER .)
+    EQUAL_TO        reduce using rule 9 (prop -> MINUS INTEGER .)
+    NOT_EQUAL_TO    reduce using rule 9 (prop -> MINUS INTEGER .)
+    GREATER_THAN_EQUAL_TO reduce using rule 9 (prop -> MINUS INTEGER .)
+    GREATER_THAN    reduce using rule 9 (prop -> MINUS INTEGER .)
+    CONS            reduce using rule 9 (prop -> MINUS INTEGER .)
+    CONJUNCTION     reduce using rule 9 (prop -> MINUS INTEGER .)
+    DISJUNCTION     reduce using rule 9 (prop -> MINUS INTEGER .)
+    LEFT_BRACKET    reduce using rule 9 (prop -> MINUS INTEGER .)
+    $end            reduce using rule 9 (prop -> MINUS INTEGER .)
+    RIGHT_PARENTHESIS reduce using rule 9 (prop -> MINUS INTEGER .)
+    COMMA           reduce using rule 9 (prop -> MINUS INTEGER .)
+    RIGHT_BRACKET   reduce using rule 9 (prop -> MINUS INTEGER .)
+    NEGATION        reduce using rule 9 (prop -> MINUS INTEGER .)
+    LEFT_PARENTHESIS reduce using rule 9 (prop -> MINUS INTEGER .)
+    TRUE            reduce using rule 9 (prop -> MINUS INTEGER .)
+    FALSE           reduce using rule 9 (prop -> MINUS INTEGER .)
+    INTEGER         reduce using rule 9 (prop -> MINUS INTEGER .)
+    REAL            reduce using rule 9 (prop -> MINUS INTEGER .)
+    STRING          reduce using rule 9 (prop -> MINUS INTEGER .)
+    HASHTAG         reduce using rule 9 (prop -> MINUS INTEGER .)
+
+
+state 31
+
+    (17) prop -> NEGATION prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    CONJUNCTION     reduce using rule 17 (prop -> NEGATION prop .)
+    DISJUNCTION     reduce using rule 17 (prop -> NEGATION prop .)
+    LEFT_BRACKET    reduce using rule 17 (prop -> NEGATION prop .)
+    $end            reduce using rule 17 (prop -> NEGATION prop .)
+    RIGHT_PARENTHESIS reduce using rule 17 (prop -> NEGATION prop .)
+    COMMA           reduce using rule 17 (prop -> NEGATION prop .)
+    RIGHT_BRACKET   reduce using rule 17 (prop -> NEGATION prop .)
+    NEGATION        reduce using rule 17 (prop -> NEGATION prop .)
+    LEFT_PARENTHESIS reduce using rule 17 (prop -> NEGATION prop .)
+    TRUE            reduce using rule 17 (prop -> NEGATION prop .)
+    FALSE           reduce using rule 17 (prop -> NEGATION prop .)
+    INTEGER         reduce using rule 17 (prop -> NEGATION prop .)
+    REAL            reduce using rule 17 (prop -> NEGATION prop .)
+    STRING          reduce using rule 17 (prop -> NEGATION prop .)
+    HASHTAG         reduce using rule 17 (prop -> NEGATION prop .)
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+    IN              shift and go to state 19
+    LESS_THAN       shift and go to state 20
+    LESS_THAN_EQUAL_TO shift and go to state 21
+    EQUAL_TO        shift and go to state 22
+    NOT_EQUAL_TO    shift and go to state 23
+    GREATER_THAN_EQUAL_TO shift and go to state 24
+    GREATER_THAN    shift and go to state 25
+    CONS            shift and go to state 26
+
+  ! PLUS            [ reduce using rule 17 (prop -> NEGATION prop .) ]
+  ! MINUS           [ reduce using rule 17 (prop -> NEGATION prop .) ]
+  ! TIMES           [ reduce using rule 17 (prop -> NEGATION prop .) ]
+  ! DIVIDE          [ reduce using rule 17 (prop -> NEGATION prop .) ]
+  ! INT_DIVIDE      [ reduce using rule 17 (prop -> NEGATION prop .) ]
+  ! MOD             [ reduce using rule 17 (prop -> NEGATION prop .) ]
+  ! IN              [ reduce using rule 17 (prop -> NEGATION prop .) ]
+  ! LESS_THAN       [ reduce using rule 17 (prop -> NEGATION prop .) ]
+  ! LESS_THAN_EQUAL_TO [ reduce using rule 17 (prop -> NEGATION prop .) ]
+  ! EQUAL_TO        [ reduce using rule 17 (prop -> NEGATION prop .) ]
+  ! NOT_EQUAL_TO    [ reduce using rule 17 (prop -> NEGATION prop .) ]
+  ! GREATER_THAN_EQUAL_TO [ reduce using rule 17 (prop -> NEGATION prop .) ]
+  ! GREATER_THAN    [ reduce using rule 17 (prop -> NEGATION prop .) ]
+  ! CONS            [ reduce using rule 17 (prop -> NEGATION prop .) ]
+  ! CONJUNCTION     [ shift and go to state 27 ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
+
+
+state 32
+
+    (20) prop -> LEFT_PARENTHESIS prop . RIGHT_PARENTHESIS
+    (30) prop -> LEFT_PARENTHESIS prop . COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> LEFT_PARENTHESIS prop . COMMA RIGHT_PARENTHESIS
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    RIGHT_PARENTHESIS shift and go to state 54
+    COMMA           shift and go to state 55
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+    IN              shift and go to state 19
+    LESS_THAN       shift and go to state 20
+    LESS_THAN_EQUAL_TO shift and go to state 21
+    EQUAL_TO        shift and go to state 22
+    NOT_EQUAL_TO    shift and go to state 23
+    GREATER_THAN_EQUAL_TO shift and go to state 24
+    GREATER_THAN    shift and go to state 25
+    CONS            shift and go to state 26
+    CONJUNCTION     shift and go to state 27
+    DISJUNCTION     shift and go to state 28
+    LEFT_BRACKET    shift and go to state 29
+
+
+state 33
+
+    (26) prop -> LEFT_BRACKET prop_contents . RIGHT_BRACKET
+
+    RIGHT_BRACKET   shift and go to state 56
+
+
+state 34
+
+    (27) prop -> LEFT_BRACKET RIGHT_BRACKET .
+
+    PLUS            reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    MINUS           reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    TIMES           reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    DIVIDE          reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    INT_DIVIDE      reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    MOD             reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    IN              reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    LESS_THAN       reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    LESS_THAN_EQUAL_TO reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    EQUAL_TO        reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    NOT_EQUAL_TO    reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    GREATER_THAN_EQUAL_TO reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    GREATER_THAN    reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    CONS            reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    CONJUNCTION     reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    DISJUNCTION     reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    LEFT_BRACKET    reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    $end            reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    RIGHT_PARENTHESIS reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    COMMA           reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    RIGHT_BRACKET   reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    NEGATION        reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    LEFT_PARENTHESIS reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    TRUE            reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    FALSE           reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    INTEGER         reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    REAL            reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    STRING          reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+    HASHTAG         reduce using rule 27 (prop -> LEFT_BRACKET RIGHT_BRACKET .)
+
+
+state 35
+
+    (28) prop_contents -> prop .
+    (29) prop_contents -> prop . COMMA prop_contents
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    RIGHT_BRACKET   reduce using rule 28 (prop_contents -> prop .)
+    COMMA           shift and go to state 57
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+    IN              shift and go to state 19
+    LESS_THAN       shift and go to state 20
+    LESS_THAN_EQUAL_TO shift and go to state 21
+    EQUAL_TO        shift and go to state 22
+    NOT_EQUAL_TO    shift and go to state 23
+    GREATER_THAN_EQUAL_TO shift and go to state 24
+    GREATER_THAN    shift and go to state 25
+    CONS            shift and go to state 26
+    CONJUNCTION     shift and go to state 27
+    DISJUNCTION     shift and go to state 28
+    LEFT_BRACKET    shift and go to state 29
+
+
+state 36
+
+    (34) prop -> HASHTAG prop . prop
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 59
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+    IN              shift and go to state 19
+    LESS_THAN       shift and go to state 20
+    LESS_THAN_EQUAL_TO shift and go to state 21
+    EQUAL_TO        shift and go to state 22
+    NOT_EQUAL_TO    shift and go to state 23
+    GREATER_THAN_EQUAL_TO shift and go to state 24
+    GREATER_THAN    shift and go to state 25
+    CONS            shift and go to state 26
+    CONJUNCTION     shift and go to state 27
+    DISJUNCTION     shift and go to state 28
+    LEFT_BRACKET    shift and go to state 60
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 58
+
+state 37
+
     (2) prop -> prop PLUS prop .
     (2) prop -> prop . PLUS prop
     (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
 
     PLUS            reduce using rule 2 (prop -> prop PLUS prop .)
     MINUS           reduce using rule 2 (prop -> prop PLUS prop .)
+    IN              reduce using rule 2 (prop -> prop PLUS prop .)
+    LESS_THAN       reduce using rule 2 (prop -> prop PLUS prop .)
+    LESS_THAN_EQUAL_TO reduce using rule 2 (prop -> prop PLUS prop .)
+    EQUAL_TO        reduce using rule 2 (prop -> prop PLUS prop .)
+    NOT_EQUAL_TO    reduce using rule 2 (prop -> prop PLUS prop .)
+    GREATER_THAN_EQUAL_TO reduce using rule 2 (prop -> prop PLUS prop .)
+    GREATER_THAN    reduce using rule 2 (prop -> prop PLUS prop .)
+    CONS            reduce using rule 2 (prop -> prop PLUS prop .)
+    CONJUNCTION     reduce using rule 2 (prop -> prop PLUS prop .)
+    DISJUNCTION     reduce using rule 2 (prop -> prop PLUS prop .)
+    LEFT_BRACKET    reduce using rule 2 (prop -> prop PLUS prop .)
     $end            reduce using rule 2 (prop -> prop PLUS prop .)
     RIGHT_PARENTHESIS reduce using rule 2 (prop -> prop PLUS prop .)
+    COMMA           reduce using rule 2 (prop -> prop PLUS prop .)
+    RIGHT_BRACKET   reduce using rule 2 (prop -> prop PLUS prop .)
+    NEGATION        reduce using rule 2 (prop -> prop PLUS prop .)
+    LEFT_PARENTHESIS reduce using rule 2 (prop -> prop PLUS prop .)
+    TRUE            reduce using rule 2 (prop -> prop PLUS prop .)
+    FALSE           reduce using rule 2 (prop -> prop PLUS prop .)
+    INTEGER         reduce using rule 2 (prop -> prop PLUS prop .)
+    REAL            reduce using rule 2 (prop -> prop PLUS prop .)
+    STRING          reduce using rule 2 (prop -> prop PLUS prop .)
+    HASHTAG         reduce using rule 2 (prop -> prop PLUS prop .)
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
 
-  ! PLUS            [ shift and go to state 7 ]
-  ! MINUS           [ shift and go to state 8 ]
+  ! TIMES           [ reduce using rule 2 (prop -> prop PLUS prop .) ]
+  ! DIVIDE          [ reduce using rule 2 (prop -> prop PLUS prop .) ]
+  ! INT_DIVIDE      [ reduce using rule 2 (prop -> prop PLUS prop .) ]
+  ! MOD             [ reduce using rule 2 (prop -> prop PLUS prop .) ]
+  ! PLUS            [ shift and go to state 13 ]
+  ! MINUS           [ shift and go to state 14 ]
+  ! IN              [ shift and go to state 19 ]
+  ! LESS_THAN       [ shift and go to state 20 ]
+  ! LESS_THAN_EQUAL_TO [ shift and go to state 21 ]
+  ! EQUAL_TO        [ shift and go to state 22 ]
+  ! NOT_EQUAL_TO    [ shift and go to state 23 ]
+  ! GREATER_THAN_EQUAL_TO [ shift and go to state 24 ]
+  ! GREATER_THAN    [ shift and go to state 25 ]
+  ! CONS            [ shift and go to state 26 ]
+  ! CONJUNCTION     [ shift and go to state 27 ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
 
 
-state 12
+state 38
 
     (3) prop -> prop MINUS prop .
     (2) prop -> prop . PLUS prop
     (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
 
     PLUS            reduce using rule 3 (prop -> prop MINUS prop .)
     MINUS           reduce using rule 3 (prop -> prop MINUS prop .)
+    IN              reduce using rule 3 (prop -> prop MINUS prop .)
+    LESS_THAN       reduce using rule 3 (prop -> prop MINUS prop .)
+    LESS_THAN_EQUAL_TO reduce using rule 3 (prop -> prop MINUS prop .)
+    EQUAL_TO        reduce using rule 3 (prop -> prop MINUS prop .)
+    NOT_EQUAL_TO    reduce using rule 3 (prop -> prop MINUS prop .)
+    GREATER_THAN_EQUAL_TO reduce using rule 3 (prop -> prop MINUS prop .)
+    GREATER_THAN    reduce using rule 3 (prop -> prop MINUS prop .)
+    CONS            reduce using rule 3 (prop -> prop MINUS prop .)
+    CONJUNCTION     reduce using rule 3 (prop -> prop MINUS prop .)
+    DISJUNCTION     reduce using rule 3 (prop -> prop MINUS prop .)
+    LEFT_BRACKET    reduce using rule 3 (prop -> prop MINUS prop .)
     $end            reduce using rule 3 (prop -> prop MINUS prop .)
     RIGHT_PARENTHESIS reduce using rule 3 (prop -> prop MINUS prop .)
+    COMMA           reduce using rule 3 (prop -> prop MINUS prop .)
+    RIGHT_BRACKET   reduce using rule 3 (prop -> prop MINUS prop .)
+    NEGATION        reduce using rule 3 (prop -> prop MINUS prop .)
+    LEFT_PARENTHESIS reduce using rule 3 (prop -> prop MINUS prop .)
+    TRUE            reduce using rule 3 (prop -> prop MINUS prop .)
+    FALSE           reduce using rule 3 (prop -> prop MINUS prop .)
+    INTEGER         reduce using rule 3 (prop -> prop MINUS prop .)
+    REAL            reduce using rule 3 (prop -> prop MINUS prop .)
+    STRING          reduce using rule 3 (prop -> prop MINUS prop .)
+    HASHTAG         reduce using rule 3 (prop -> prop MINUS prop .)
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
 
-  ! PLUS            [ shift and go to state 7 ]
-  ! MINUS           [ shift and go to state 8 ]
+  ! TIMES           [ reduce using rule 3 (prop -> prop MINUS prop .) ]
+  ! DIVIDE          [ reduce using rule 3 (prop -> prop MINUS prop .) ]
+  ! INT_DIVIDE      [ reduce using rule 3 (prop -> prop MINUS prop .) ]
+  ! MOD             [ reduce using rule 3 (prop -> prop MINUS prop .) ]
+  ! PLUS            [ shift and go to state 13 ]
+  ! MINUS           [ shift and go to state 14 ]
+  ! IN              [ shift and go to state 19 ]
+  ! LESS_THAN       [ shift and go to state 20 ]
+  ! LESS_THAN_EQUAL_TO [ shift and go to state 21 ]
+  ! EQUAL_TO        [ shift and go to state 22 ]
+  ! NOT_EQUAL_TO    [ shift and go to state 23 ]
+  ! GREATER_THAN_EQUAL_TO [ shift and go to state 24 ]
+  ! GREATER_THAN    [ shift and go to state 25 ]
+  ! CONS            [ shift and go to state 26 ]
+  ! CONJUNCTION     [ shift and go to state 27 ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
 
 
-state 13
+state 39
 
-    (5) prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .
+    (4) prop -> prop TIMES prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
 
-    PLUS            reduce using rule 5 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
-    MINUS           reduce using rule 5 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
-    $end            reduce using rule 5 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
-    RIGHT_PARENTHESIS reduce using rule 5 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    PLUS            reduce using rule 4 (prop -> prop TIMES prop .)
+    MINUS           reduce using rule 4 (prop -> prop TIMES prop .)
+    TIMES           reduce using rule 4 (prop -> prop TIMES prop .)
+    DIVIDE          reduce using rule 4 (prop -> prop TIMES prop .)
+    INT_DIVIDE      reduce using rule 4 (prop -> prop TIMES prop .)
+    MOD             reduce using rule 4 (prop -> prop TIMES prop .)
+    IN              reduce using rule 4 (prop -> prop TIMES prop .)
+    LESS_THAN       reduce using rule 4 (prop -> prop TIMES prop .)
+    LESS_THAN_EQUAL_TO reduce using rule 4 (prop -> prop TIMES prop .)
+    EQUAL_TO        reduce using rule 4 (prop -> prop TIMES prop .)
+    NOT_EQUAL_TO    reduce using rule 4 (prop -> prop TIMES prop .)
+    GREATER_THAN_EQUAL_TO reduce using rule 4 (prop -> prop TIMES prop .)
+    GREATER_THAN    reduce using rule 4 (prop -> prop TIMES prop .)
+    CONS            reduce using rule 4 (prop -> prop TIMES prop .)
+    CONJUNCTION     reduce using rule 4 (prop -> prop TIMES prop .)
+    DISJUNCTION     reduce using rule 4 (prop -> prop TIMES prop .)
+    LEFT_BRACKET    reduce using rule 4 (prop -> prop TIMES prop .)
+    $end            reduce using rule 4 (prop -> prop TIMES prop .)
+    RIGHT_PARENTHESIS reduce using rule 4 (prop -> prop TIMES prop .)
+    COMMA           reduce using rule 4 (prop -> prop TIMES prop .)
+    RIGHT_BRACKET   reduce using rule 4 (prop -> prop TIMES prop .)
+    NEGATION        reduce using rule 4 (prop -> prop TIMES prop .)
+    LEFT_PARENTHESIS reduce using rule 4 (prop -> prop TIMES prop .)
+    TRUE            reduce using rule 4 (prop -> prop TIMES prop .)
+    FALSE           reduce using rule 4 (prop -> prop TIMES prop .)
+    INTEGER         reduce using rule 4 (prop -> prop TIMES prop .)
+    REAL            reduce using rule 4 (prop -> prop TIMES prop .)
+    STRING          reduce using rule 4 (prop -> prop TIMES prop .)
+    HASHTAG         reduce using rule 4 (prop -> prop TIMES prop .)
 
+  ! PLUS            [ shift and go to state 13 ]
+  ! MINUS           [ shift and go to state 14 ]
+  ! TIMES           [ shift and go to state 15 ]
+  ! DIVIDE          [ shift and go to state 16 ]
+  ! INT_DIVIDE      [ shift and go to state 17 ]
+  ! MOD             [ shift and go to state 18 ]
+  ! IN              [ shift and go to state 19 ]
+  ! LESS_THAN       [ shift and go to state 20 ]
+  ! LESS_THAN_EQUAL_TO [ shift and go to state 21 ]
+  ! EQUAL_TO        [ shift and go to state 22 ]
+  ! NOT_EQUAL_TO    [ shift and go to state 23 ]
+  ! GREATER_THAN_EQUAL_TO [ shift and go to state 24 ]
+  ! GREATER_THAN    [ shift and go to state 25 ]
+  ! CONS            [ shift and go to state 26 ]
+  ! CONJUNCTION     [ shift and go to state 27 ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
+
+
+state 40
+
+    (5) prop -> prop DIVIDE prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    PLUS            reduce using rule 5 (prop -> prop DIVIDE prop .)
+    MINUS           reduce using rule 5 (prop -> prop DIVIDE prop .)
+    TIMES           reduce using rule 5 (prop -> prop DIVIDE prop .)
+    DIVIDE          reduce using rule 5 (prop -> prop DIVIDE prop .)
+    INT_DIVIDE      reduce using rule 5 (prop -> prop DIVIDE prop .)
+    MOD             reduce using rule 5 (prop -> prop DIVIDE prop .)
+    IN              reduce using rule 5 (prop -> prop DIVIDE prop .)
+    LESS_THAN       reduce using rule 5 (prop -> prop DIVIDE prop .)
+    LESS_THAN_EQUAL_TO reduce using rule 5 (prop -> prop DIVIDE prop .)
+    EQUAL_TO        reduce using rule 5 (prop -> prop DIVIDE prop .)
+    NOT_EQUAL_TO    reduce using rule 5 (prop -> prop DIVIDE prop .)
+    GREATER_THAN_EQUAL_TO reduce using rule 5 (prop -> prop DIVIDE prop .)
+    GREATER_THAN    reduce using rule 5 (prop -> prop DIVIDE prop .)
+    CONS            reduce using rule 5 (prop -> prop DIVIDE prop .)
+    CONJUNCTION     reduce using rule 5 (prop -> prop DIVIDE prop .)
+    DISJUNCTION     reduce using rule 5 (prop -> prop DIVIDE prop .)
+    LEFT_BRACKET    reduce using rule 5 (prop -> prop DIVIDE prop .)
+    $end            reduce using rule 5 (prop -> prop DIVIDE prop .)
+    RIGHT_PARENTHESIS reduce using rule 5 (prop -> prop DIVIDE prop .)
+    COMMA           reduce using rule 5 (prop -> prop DIVIDE prop .)
+    RIGHT_BRACKET   reduce using rule 5 (prop -> prop DIVIDE prop .)
+    NEGATION        reduce using rule 5 (prop -> prop DIVIDE prop .)
+    LEFT_PARENTHESIS reduce using rule 5 (prop -> prop DIVIDE prop .)
+    TRUE            reduce using rule 5 (prop -> prop DIVIDE prop .)
+    FALSE           reduce using rule 5 (prop -> prop DIVIDE prop .)
+    INTEGER         reduce using rule 5 (prop -> prop DIVIDE prop .)
+    REAL            reduce using rule 5 (prop -> prop DIVIDE prop .)
+    STRING          reduce using rule 5 (prop -> prop DIVIDE prop .)
+    HASHTAG         reduce using rule 5 (prop -> prop DIVIDE prop .)
+
+  ! PLUS            [ shift and go to state 13 ]
+  ! MINUS           [ shift and go to state 14 ]
+  ! TIMES           [ shift and go to state 15 ]
+  ! DIVIDE          [ shift and go to state 16 ]
+  ! INT_DIVIDE      [ shift and go to state 17 ]
+  ! MOD             [ shift and go to state 18 ]
+  ! IN              [ shift and go to state 19 ]
+  ! LESS_THAN       [ shift and go to state 20 ]
+  ! LESS_THAN_EQUAL_TO [ shift and go to state 21 ]
+  ! EQUAL_TO        [ shift and go to state 22 ]
+  ! NOT_EQUAL_TO    [ shift and go to state 23 ]
+  ! GREATER_THAN_EQUAL_TO [ shift and go to state 24 ]
+  ! GREATER_THAN    [ shift and go to state 25 ]
+  ! CONS            [ shift and go to state 26 ]
+  ! CONJUNCTION     [ shift and go to state 27 ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
+
+
+state 41
+
+    (6) prop -> prop INT_DIVIDE prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    PLUS            reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    MINUS           reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    TIMES           reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    DIVIDE          reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    INT_DIVIDE      reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    MOD             reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    IN              reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    LESS_THAN       reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    LESS_THAN_EQUAL_TO reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    EQUAL_TO        reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    NOT_EQUAL_TO    reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    GREATER_THAN_EQUAL_TO reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    GREATER_THAN    reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    CONS            reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    CONJUNCTION     reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    DISJUNCTION     reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    LEFT_BRACKET    reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    $end            reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    RIGHT_PARENTHESIS reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    COMMA           reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    RIGHT_BRACKET   reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    NEGATION        reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    LEFT_PARENTHESIS reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    TRUE            reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    FALSE           reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    INTEGER         reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    REAL            reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    STRING          reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+    HASHTAG         reduce using rule 6 (prop -> prop INT_DIVIDE prop .)
+
+  ! PLUS            [ shift and go to state 13 ]
+  ! MINUS           [ shift and go to state 14 ]
+  ! TIMES           [ shift and go to state 15 ]
+  ! DIVIDE          [ shift and go to state 16 ]
+  ! INT_DIVIDE      [ shift and go to state 17 ]
+  ! MOD             [ shift and go to state 18 ]
+  ! IN              [ shift and go to state 19 ]
+  ! LESS_THAN       [ shift and go to state 20 ]
+  ! LESS_THAN_EQUAL_TO [ shift and go to state 21 ]
+  ! EQUAL_TO        [ shift and go to state 22 ]
+  ! NOT_EQUAL_TO    [ shift and go to state 23 ]
+  ! GREATER_THAN_EQUAL_TO [ shift and go to state 24 ]
+  ! GREATER_THAN    [ shift and go to state 25 ]
+  ! CONS            [ shift and go to state 26 ]
+  ! CONJUNCTION     [ shift and go to state 27 ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
+
+
+state 42
+
+    (7) prop -> prop MOD prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    PLUS            reduce using rule 7 (prop -> prop MOD prop .)
+    MINUS           reduce using rule 7 (prop -> prop MOD prop .)
+    TIMES           reduce using rule 7 (prop -> prop MOD prop .)
+    DIVIDE          reduce using rule 7 (prop -> prop MOD prop .)
+    INT_DIVIDE      reduce using rule 7 (prop -> prop MOD prop .)
+    MOD             reduce using rule 7 (prop -> prop MOD prop .)
+    IN              reduce using rule 7 (prop -> prop MOD prop .)
+    LESS_THAN       reduce using rule 7 (prop -> prop MOD prop .)
+    LESS_THAN_EQUAL_TO reduce using rule 7 (prop -> prop MOD prop .)
+    EQUAL_TO        reduce using rule 7 (prop -> prop MOD prop .)
+    NOT_EQUAL_TO    reduce using rule 7 (prop -> prop MOD prop .)
+    GREATER_THAN_EQUAL_TO reduce using rule 7 (prop -> prop MOD prop .)
+    GREATER_THAN    reduce using rule 7 (prop -> prop MOD prop .)
+    CONS            reduce using rule 7 (prop -> prop MOD prop .)
+    CONJUNCTION     reduce using rule 7 (prop -> prop MOD prop .)
+    DISJUNCTION     reduce using rule 7 (prop -> prop MOD prop .)
+    LEFT_BRACKET    reduce using rule 7 (prop -> prop MOD prop .)
+    $end            reduce using rule 7 (prop -> prop MOD prop .)
+    RIGHT_PARENTHESIS reduce using rule 7 (prop -> prop MOD prop .)
+    COMMA           reduce using rule 7 (prop -> prop MOD prop .)
+    RIGHT_BRACKET   reduce using rule 7 (prop -> prop MOD prop .)
+    NEGATION        reduce using rule 7 (prop -> prop MOD prop .)
+    LEFT_PARENTHESIS reduce using rule 7 (prop -> prop MOD prop .)
+    TRUE            reduce using rule 7 (prop -> prop MOD prop .)
+    FALSE           reduce using rule 7 (prop -> prop MOD prop .)
+    INTEGER         reduce using rule 7 (prop -> prop MOD prop .)
+    REAL            reduce using rule 7 (prop -> prop MOD prop .)
+    STRING          reduce using rule 7 (prop -> prop MOD prop .)
+    HASHTAG         reduce using rule 7 (prop -> prop MOD prop .)
+
+  ! PLUS            [ shift and go to state 13 ]
+  ! MINUS           [ shift and go to state 14 ]
+  ! TIMES           [ shift and go to state 15 ]
+  ! DIVIDE          [ shift and go to state 16 ]
+  ! INT_DIVIDE      [ shift and go to state 17 ]
+  ! MOD             [ shift and go to state 18 ]
+  ! IN              [ shift and go to state 19 ]
+  ! LESS_THAN       [ shift and go to state 20 ]
+  ! LESS_THAN_EQUAL_TO [ shift and go to state 21 ]
+  ! EQUAL_TO        [ shift and go to state 22 ]
+  ! NOT_EQUAL_TO    [ shift and go to state 23 ]
+  ! GREATER_THAN_EQUAL_TO [ shift and go to state 24 ]
+  ! GREATER_THAN    [ shift and go to state 25 ]
+  ! CONS            [ shift and go to state 26 ]
+  ! CONJUNCTION     [ shift and go to state 27 ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
+
+
+state 43
+
+    (8) prop -> prop IN prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    IN              reduce using rule 8 (prop -> prop IN prop .)
+    LESS_THAN       reduce using rule 8 (prop -> prop IN prop .)
+    LESS_THAN_EQUAL_TO reduce using rule 8 (prop -> prop IN prop .)
+    EQUAL_TO        reduce using rule 8 (prop -> prop IN prop .)
+    NOT_EQUAL_TO    reduce using rule 8 (prop -> prop IN prop .)
+    GREATER_THAN_EQUAL_TO reduce using rule 8 (prop -> prop IN prop .)
+    GREATER_THAN    reduce using rule 8 (prop -> prop IN prop .)
+    CONS            reduce using rule 8 (prop -> prop IN prop .)
+    CONJUNCTION     reduce using rule 8 (prop -> prop IN prop .)
+    DISJUNCTION     reduce using rule 8 (prop -> prop IN prop .)
+    LEFT_BRACKET    reduce using rule 8 (prop -> prop IN prop .)
+    $end            reduce using rule 8 (prop -> prop IN prop .)
+    RIGHT_PARENTHESIS reduce using rule 8 (prop -> prop IN prop .)
+    COMMA           reduce using rule 8 (prop -> prop IN prop .)
+    RIGHT_BRACKET   reduce using rule 8 (prop -> prop IN prop .)
+    NEGATION        reduce using rule 8 (prop -> prop IN prop .)
+    LEFT_PARENTHESIS reduce using rule 8 (prop -> prop IN prop .)
+    TRUE            reduce using rule 8 (prop -> prop IN prop .)
+    FALSE           reduce using rule 8 (prop -> prop IN prop .)
+    INTEGER         reduce using rule 8 (prop -> prop IN prop .)
+    REAL            reduce using rule 8 (prop -> prop IN prop .)
+    STRING          reduce using rule 8 (prop -> prop IN prop .)
+    HASHTAG         reduce using rule 8 (prop -> prop IN prop .)
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+
+  ! PLUS            [ reduce using rule 8 (prop -> prop IN prop .) ]
+  ! MINUS           [ reduce using rule 8 (prop -> prop IN prop .) ]
+  ! TIMES           [ reduce using rule 8 (prop -> prop IN prop .) ]
+  ! DIVIDE          [ reduce using rule 8 (prop -> prop IN prop .) ]
+  ! INT_DIVIDE      [ reduce using rule 8 (prop -> prop IN prop .) ]
+  ! MOD             [ reduce using rule 8 (prop -> prop IN prop .) ]
+  ! IN              [ shift and go to state 19 ]
+  ! LESS_THAN       [ shift and go to state 20 ]
+  ! LESS_THAN_EQUAL_TO [ shift and go to state 21 ]
+  ! EQUAL_TO        [ shift and go to state 22 ]
+  ! NOT_EQUAL_TO    [ shift and go to state 23 ]
+  ! GREATER_THAN_EQUAL_TO [ shift and go to state 24 ]
+  ! GREATER_THAN    [ shift and go to state 25 ]
+  ! CONS            [ shift and go to state 26 ]
+  ! CONJUNCTION     [ shift and go to state 27 ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
+
+
+state 44
+
+    (10) prop -> prop LESS_THAN prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    LESS_THAN       reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    LESS_THAN_EQUAL_TO reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    EQUAL_TO        reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    NOT_EQUAL_TO    reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    GREATER_THAN_EQUAL_TO reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    GREATER_THAN    reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    CONJUNCTION     reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    DISJUNCTION     reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    LEFT_BRACKET    reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    $end            reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    RIGHT_PARENTHESIS reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    COMMA           reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    RIGHT_BRACKET   reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    NEGATION        reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    LEFT_PARENTHESIS reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    TRUE            reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    FALSE           reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    INTEGER         reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    REAL            reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    STRING          reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    HASHTAG         reduce using rule 10 (prop -> prop LESS_THAN prop .)
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+    IN              shift and go to state 19
+    CONS            shift and go to state 26
+
+  ! PLUS            [ reduce using rule 10 (prop -> prop LESS_THAN prop .) ]
+  ! MINUS           [ reduce using rule 10 (prop -> prop LESS_THAN prop .) ]
+  ! TIMES           [ reduce using rule 10 (prop -> prop LESS_THAN prop .) ]
+  ! DIVIDE          [ reduce using rule 10 (prop -> prop LESS_THAN prop .) ]
+  ! INT_DIVIDE      [ reduce using rule 10 (prop -> prop LESS_THAN prop .) ]
+  ! MOD             [ reduce using rule 10 (prop -> prop LESS_THAN prop .) ]
+  ! IN              [ reduce using rule 10 (prop -> prop LESS_THAN prop .) ]
+  ! CONS            [ reduce using rule 10 (prop -> prop LESS_THAN prop .) ]
+  ! LESS_THAN       [ shift and go to state 20 ]
+  ! LESS_THAN_EQUAL_TO [ shift and go to state 21 ]
+  ! EQUAL_TO        [ shift and go to state 22 ]
+  ! NOT_EQUAL_TO    [ shift and go to state 23 ]
+  ! GREATER_THAN_EQUAL_TO [ shift and go to state 24 ]
+  ! GREATER_THAN    [ shift and go to state 25 ]
+  ! CONJUNCTION     [ shift and go to state 27 ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
+
+
+state 45
+
+    (11) prop -> prop LESS_THAN_EQUAL_TO prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    LESS_THAN       reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    LESS_THAN_EQUAL_TO reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    EQUAL_TO        reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    NOT_EQUAL_TO    reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    GREATER_THAN_EQUAL_TO reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    GREATER_THAN    reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    CONJUNCTION     reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    DISJUNCTION     reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    LEFT_BRACKET    reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    $end            reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    RIGHT_PARENTHESIS reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    COMMA           reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    RIGHT_BRACKET   reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    NEGATION        reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    LEFT_PARENTHESIS reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    TRUE            reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    FALSE           reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    INTEGER         reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    REAL            reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    STRING          reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    HASHTAG         reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .)
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+    IN              shift and go to state 19
+    CONS            shift and go to state 26
+
+  ! PLUS            [ reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .) ]
+  ! MINUS           [ reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .) ]
+  ! TIMES           [ reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .) ]
+  ! DIVIDE          [ reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .) ]
+  ! INT_DIVIDE      [ reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .) ]
+  ! MOD             [ reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .) ]
+  ! IN              [ reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .) ]
+  ! CONS            [ reduce using rule 11 (prop -> prop LESS_THAN_EQUAL_TO prop .) ]
+  ! LESS_THAN       [ shift and go to state 20 ]
+  ! LESS_THAN_EQUAL_TO [ shift and go to state 21 ]
+  ! EQUAL_TO        [ shift and go to state 22 ]
+  ! NOT_EQUAL_TO    [ shift and go to state 23 ]
+  ! GREATER_THAN_EQUAL_TO [ shift and go to state 24 ]
+  ! GREATER_THAN    [ shift and go to state 25 ]
+  ! CONJUNCTION     [ shift and go to state 27 ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
+
+
+state 46
+
+    (12) prop -> prop EQUAL_TO prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    LESS_THAN       reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    LESS_THAN_EQUAL_TO reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    EQUAL_TO        reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    NOT_EQUAL_TO    reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    GREATER_THAN_EQUAL_TO reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    GREATER_THAN    reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    CONJUNCTION     reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    DISJUNCTION     reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    LEFT_BRACKET    reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    $end            reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    RIGHT_PARENTHESIS reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    COMMA           reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    RIGHT_BRACKET   reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    NEGATION        reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    LEFT_PARENTHESIS reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    TRUE            reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    FALSE           reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    INTEGER         reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    REAL            reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    STRING          reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    HASHTAG         reduce using rule 12 (prop -> prop EQUAL_TO prop .)
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+    IN              shift and go to state 19
+    CONS            shift and go to state 26
+
+  ! PLUS            [ reduce using rule 12 (prop -> prop EQUAL_TO prop .) ]
+  ! MINUS           [ reduce using rule 12 (prop -> prop EQUAL_TO prop .) ]
+  ! TIMES           [ reduce using rule 12 (prop -> prop EQUAL_TO prop .) ]
+  ! DIVIDE          [ reduce using rule 12 (prop -> prop EQUAL_TO prop .) ]
+  ! INT_DIVIDE      [ reduce using rule 12 (prop -> prop EQUAL_TO prop .) ]
+  ! MOD             [ reduce using rule 12 (prop -> prop EQUAL_TO prop .) ]
+  ! IN              [ reduce using rule 12 (prop -> prop EQUAL_TO prop .) ]
+  ! CONS            [ reduce using rule 12 (prop -> prop EQUAL_TO prop .) ]
+  ! LESS_THAN       [ shift and go to state 20 ]
+  ! LESS_THAN_EQUAL_TO [ shift and go to state 21 ]
+  ! EQUAL_TO        [ shift and go to state 22 ]
+  ! NOT_EQUAL_TO    [ shift and go to state 23 ]
+  ! GREATER_THAN_EQUAL_TO [ shift and go to state 24 ]
+  ! GREATER_THAN    [ shift and go to state 25 ]
+  ! CONJUNCTION     [ shift and go to state 27 ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
+
+
+state 47
+
+    (13) prop -> prop NOT_EQUAL_TO prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    LESS_THAN       reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    LESS_THAN_EQUAL_TO reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    EQUAL_TO        reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    NOT_EQUAL_TO    reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    GREATER_THAN_EQUAL_TO reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    GREATER_THAN    reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    CONJUNCTION     reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    DISJUNCTION     reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    LEFT_BRACKET    reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    $end            reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    RIGHT_PARENTHESIS reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    COMMA           reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    RIGHT_BRACKET   reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    NEGATION        reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    LEFT_PARENTHESIS reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    TRUE            reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    FALSE           reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    INTEGER         reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    REAL            reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    STRING          reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    HASHTAG         reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .)
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+    IN              shift and go to state 19
+    CONS            shift and go to state 26
+
+  ! PLUS            [ reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .) ]
+  ! MINUS           [ reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .) ]
+  ! TIMES           [ reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .) ]
+  ! DIVIDE          [ reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .) ]
+  ! INT_DIVIDE      [ reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .) ]
+  ! MOD             [ reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .) ]
+  ! IN              [ reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .) ]
+  ! CONS            [ reduce using rule 13 (prop -> prop NOT_EQUAL_TO prop .) ]
+  ! LESS_THAN       [ shift and go to state 20 ]
+  ! LESS_THAN_EQUAL_TO [ shift and go to state 21 ]
+  ! EQUAL_TO        [ shift and go to state 22 ]
+  ! NOT_EQUAL_TO    [ shift and go to state 23 ]
+  ! GREATER_THAN_EQUAL_TO [ shift and go to state 24 ]
+  ! GREATER_THAN    [ shift and go to state 25 ]
+  ! CONJUNCTION     [ shift and go to state 27 ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
+
+
+state 48
+
+    (14) prop -> prop GREATER_THAN_EQUAL_TO prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    LESS_THAN       reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    LESS_THAN_EQUAL_TO reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    EQUAL_TO        reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    NOT_EQUAL_TO    reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    GREATER_THAN_EQUAL_TO reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    GREATER_THAN    reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    CONJUNCTION     reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    DISJUNCTION     reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    LEFT_BRACKET    reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    $end            reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    RIGHT_PARENTHESIS reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    COMMA           reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    RIGHT_BRACKET   reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    NEGATION        reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    LEFT_PARENTHESIS reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    TRUE            reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    FALSE           reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    INTEGER         reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    REAL            reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    STRING          reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    HASHTAG         reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .)
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+    IN              shift and go to state 19
+    CONS            shift and go to state 26
+
+  ! PLUS            [ reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .) ]
+  ! MINUS           [ reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .) ]
+  ! TIMES           [ reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .) ]
+  ! DIVIDE          [ reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .) ]
+  ! INT_DIVIDE      [ reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .) ]
+  ! MOD             [ reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .) ]
+  ! IN              [ reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .) ]
+  ! CONS            [ reduce using rule 14 (prop -> prop GREATER_THAN_EQUAL_TO prop .) ]
+  ! LESS_THAN       [ shift and go to state 20 ]
+  ! LESS_THAN_EQUAL_TO [ shift and go to state 21 ]
+  ! EQUAL_TO        [ shift and go to state 22 ]
+  ! NOT_EQUAL_TO    [ shift and go to state 23 ]
+  ! GREATER_THAN_EQUAL_TO [ shift and go to state 24 ]
+  ! GREATER_THAN    [ shift and go to state 25 ]
+  ! CONJUNCTION     [ shift and go to state 27 ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
+
+
+state 49
+
+    (15) prop -> prop GREATER_THAN prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    LESS_THAN       reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    LESS_THAN_EQUAL_TO reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    EQUAL_TO        reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    NOT_EQUAL_TO    reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    GREATER_THAN_EQUAL_TO reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    GREATER_THAN    reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    CONJUNCTION     reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    DISJUNCTION     reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    LEFT_BRACKET    reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    $end            reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    RIGHT_PARENTHESIS reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    COMMA           reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    RIGHT_BRACKET   reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    NEGATION        reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    LEFT_PARENTHESIS reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    TRUE            reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    FALSE           reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    INTEGER         reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    REAL            reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    STRING          reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    HASHTAG         reduce using rule 15 (prop -> prop GREATER_THAN prop .)
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+    IN              shift and go to state 19
+    CONS            shift and go to state 26
+
+  ! PLUS            [ reduce using rule 15 (prop -> prop GREATER_THAN prop .) ]
+  ! MINUS           [ reduce using rule 15 (prop -> prop GREATER_THAN prop .) ]
+  ! TIMES           [ reduce using rule 15 (prop -> prop GREATER_THAN prop .) ]
+  ! DIVIDE          [ reduce using rule 15 (prop -> prop GREATER_THAN prop .) ]
+  ! INT_DIVIDE      [ reduce using rule 15 (prop -> prop GREATER_THAN prop .) ]
+  ! MOD             [ reduce using rule 15 (prop -> prop GREATER_THAN prop .) ]
+  ! IN              [ reduce using rule 15 (prop -> prop GREATER_THAN prop .) ]
+  ! CONS            [ reduce using rule 15 (prop -> prop GREATER_THAN prop .) ]
+  ! LESS_THAN       [ shift and go to state 20 ]
+  ! LESS_THAN_EQUAL_TO [ shift and go to state 21 ]
+  ! EQUAL_TO        [ shift and go to state 22 ]
+  ! NOT_EQUAL_TO    [ shift and go to state 23 ]
+  ! GREATER_THAN_EQUAL_TO [ shift and go to state 24 ]
+  ! GREATER_THAN    [ shift and go to state 25 ]
+  ! CONJUNCTION     [ shift and go to state 27 ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
+
+
+state 50
+
+    (16) prop -> prop CONS prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    LESS_THAN       reduce using rule 16 (prop -> prop CONS prop .)
+    LESS_THAN_EQUAL_TO reduce using rule 16 (prop -> prop CONS prop .)
+    EQUAL_TO        reduce using rule 16 (prop -> prop CONS prop .)
+    NOT_EQUAL_TO    reduce using rule 16 (prop -> prop CONS prop .)
+    GREATER_THAN_EQUAL_TO reduce using rule 16 (prop -> prop CONS prop .)
+    GREATER_THAN    reduce using rule 16 (prop -> prop CONS prop .)
+    CONJUNCTION     reduce using rule 16 (prop -> prop CONS prop .)
+    DISJUNCTION     reduce using rule 16 (prop -> prop CONS prop .)
+    LEFT_BRACKET    reduce using rule 16 (prop -> prop CONS prop .)
+    $end            reduce using rule 16 (prop -> prop CONS prop .)
+    RIGHT_PARENTHESIS reduce using rule 16 (prop -> prop CONS prop .)
+    COMMA           reduce using rule 16 (prop -> prop CONS prop .)
+    RIGHT_BRACKET   reduce using rule 16 (prop -> prop CONS prop .)
+    NEGATION        reduce using rule 16 (prop -> prop CONS prop .)
+    LEFT_PARENTHESIS reduce using rule 16 (prop -> prop CONS prop .)
+    TRUE            reduce using rule 16 (prop -> prop CONS prop .)
+    FALSE           reduce using rule 16 (prop -> prop CONS prop .)
+    INTEGER         reduce using rule 16 (prop -> prop CONS prop .)
+    REAL            reduce using rule 16 (prop -> prop CONS prop .)
+    STRING          reduce using rule 16 (prop -> prop CONS prop .)
+    HASHTAG         reduce using rule 16 (prop -> prop CONS prop .)
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+    IN              shift and go to state 19
+    CONS            shift and go to state 26
+
+  ! PLUS            [ reduce using rule 16 (prop -> prop CONS prop .) ]
+  ! MINUS           [ reduce using rule 16 (prop -> prop CONS prop .) ]
+  ! TIMES           [ reduce using rule 16 (prop -> prop CONS prop .) ]
+  ! DIVIDE          [ reduce using rule 16 (prop -> prop CONS prop .) ]
+  ! INT_DIVIDE      [ reduce using rule 16 (prop -> prop CONS prop .) ]
+  ! MOD             [ reduce using rule 16 (prop -> prop CONS prop .) ]
+  ! IN              [ reduce using rule 16 (prop -> prop CONS prop .) ]
+  ! CONS            [ reduce using rule 16 (prop -> prop CONS prop .) ]
+  ! LESS_THAN       [ shift and go to state 20 ]
+  ! LESS_THAN_EQUAL_TO [ shift and go to state 21 ]
+  ! EQUAL_TO        [ shift and go to state 22 ]
+  ! NOT_EQUAL_TO    [ shift and go to state 23 ]
+  ! GREATER_THAN_EQUAL_TO [ shift and go to state 24 ]
+  ! GREATER_THAN    [ shift and go to state 25 ]
+  ! CONJUNCTION     [ shift and go to state 27 ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
+
+
+state 51
+
+    (18) prop -> prop CONJUNCTION prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    CONJUNCTION     reduce using rule 18 (prop -> prop CONJUNCTION prop .)
+    DISJUNCTION     reduce using rule 18 (prop -> prop CONJUNCTION prop .)
+    LEFT_BRACKET    reduce using rule 18 (prop -> prop CONJUNCTION prop .)
+    $end            reduce using rule 18 (prop -> prop CONJUNCTION prop .)
+    RIGHT_PARENTHESIS reduce using rule 18 (prop -> prop CONJUNCTION prop .)
+    COMMA           reduce using rule 18 (prop -> prop CONJUNCTION prop .)
+    RIGHT_BRACKET   reduce using rule 18 (prop -> prop CONJUNCTION prop .)
+    NEGATION        reduce using rule 18 (prop -> prop CONJUNCTION prop .)
+    LEFT_PARENTHESIS reduce using rule 18 (prop -> prop CONJUNCTION prop .)
+    TRUE            reduce using rule 18 (prop -> prop CONJUNCTION prop .)
+    FALSE           reduce using rule 18 (prop -> prop CONJUNCTION prop .)
+    INTEGER         reduce using rule 18 (prop -> prop CONJUNCTION prop .)
+    REAL            reduce using rule 18 (prop -> prop CONJUNCTION prop .)
+    STRING          reduce using rule 18 (prop -> prop CONJUNCTION prop .)
+    HASHTAG         reduce using rule 18 (prop -> prop CONJUNCTION prop .)
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+    IN              shift and go to state 19
+    LESS_THAN       shift and go to state 20
+    LESS_THAN_EQUAL_TO shift and go to state 21
+    EQUAL_TO        shift and go to state 22
+    NOT_EQUAL_TO    shift and go to state 23
+    GREATER_THAN_EQUAL_TO shift and go to state 24
+    GREATER_THAN    shift and go to state 25
+    CONS            shift and go to state 26
+
+  ! PLUS            [ reduce using rule 18 (prop -> prop CONJUNCTION prop .) ]
+  ! MINUS           [ reduce using rule 18 (prop -> prop CONJUNCTION prop .) ]
+  ! TIMES           [ reduce using rule 18 (prop -> prop CONJUNCTION prop .) ]
+  ! DIVIDE          [ reduce using rule 18 (prop -> prop CONJUNCTION prop .) ]
+  ! INT_DIVIDE      [ reduce using rule 18 (prop -> prop CONJUNCTION prop .) ]
+  ! MOD             [ reduce using rule 18 (prop -> prop CONJUNCTION prop .) ]
+  ! IN              [ reduce using rule 18 (prop -> prop CONJUNCTION prop .) ]
+  ! LESS_THAN       [ reduce using rule 18 (prop -> prop CONJUNCTION prop .) ]
+  ! LESS_THAN_EQUAL_TO [ reduce using rule 18 (prop -> prop CONJUNCTION prop .) ]
+  ! EQUAL_TO        [ reduce using rule 18 (prop -> prop CONJUNCTION prop .) ]
+  ! NOT_EQUAL_TO    [ reduce using rule 18 (prop -> prop CONJUNCTION prop .) ]
+  ! GREATER_THAN_EQUAL_TO [ reduce using rule 18 (prop -> prop CONJUNCTION prop .) ]
+  ! GREATER_THAN    [ reduce using rule 18 (prop -> prop CONJUNCTION prop .) ]
+  ! CONS            [ reduce using rule 18 (prop -> prop CONJUNCTION prop .) ]
+  ! CONJUNCTION     [ shift and go to state 27 ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
+
+
+state 52
+
+    (19) prop -> prop DISJUNCTION prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    DISJUNCTION     reduce using rule 19 (prop -> prop DISJUNCTION prop .)
+    LEFT_BRACKET    reduce using rule 19 (prop -> prop DISJUNCTION prop .)
+    $end            reduce using rule 19 (prop -> prop DISJUNCTION prop .)
+    RIGHT_PARENTHESIS reduce using rule 19 (prop -> prop DISJUNCTION prop .)
+    COMMA           reduce using rule 19 (prop -> prop DISJUNCTION prop .)
+    RIGHT_BRACKET   reduce using rule 19 (prop -> prop DISJUNCTION prop .)
+    NEGATION        reduce using rule 19 (prop -> prop DISJUNCTION prop .)
+    LEFT_PARENTHESIS reduce using rule 19 (prop -> prop DISJUNCTION prop .)
+    TRUE            reduce using rule 19 (prop -> prop DISJUNCTION prop .)
+    FALSE           reduce using rule 19 (prop -> prop DISJUNCTION prop .)
+    INTEGER         reduce using rule 19 (prop -> prop DISJUNCTION prop .)
+    REAL            reduce using rule 19 (prop -> prop DISJUNCTION prop .)
+    STRING          reduce using rule 19 (prop -> prop DISJUNCTION prop .)
+    HASHTAG         reduce using rule 19 (prop -> prop DISJUNCTION prop .)
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+    IN              shift and go to state 19
+    LESS_THAN       shift and go to state 20
+    LESS_THAN_EQUAL_TO shift and go to state 21
+    EQUAL_TO        shift and go to state 22
+    NOT_EQUAL_TO    shift and go to state 23
+    GREATER_THAN_EQUAL_TO shift and go to state 24
+    GREATER_THAN    shift and go to state 25
+    CONS            shift and go to state 26
+    CONJUNCTION     shift and go to state 27
+
+  ! PLUS            [ reduce using rule 19 (prop -> prop DISJUNCTION prop .) ]
+  ! MINUS           [ reduce using rule 19 (prop -> prop DISJUNCTION prop .) ]
+  ! TIMES           [ reduce using rule 19 (prop -> prop DISJUNCTION prop .) ]
+  ! DIVIDE          [ reduce using rule 19 (prop -> prop DISJUNCTION prop .) ]
+  ! INT_DIVIDE      [ reduce using rule 19 (prop -> prop DISJUNCTION prop .) ]
+  ! MOD             [ reduce using rule 19 (prop -> prop DISJUNCTION prop .) ]
+  ! IN              [ reduce using rule 19 (prop -> prop DISJUNCTION prop .) ]
+  ! LESS_THAN       [ reduce using rule 19 (prop -> prop DISJUNCTION prop .) ]
+  ! LESS_THAN_EQUAL_TO [ reduce using rule 19 (prop -> prop DISJUNCTION prop .) ]
+  ! EQUAL_TO        [ reduce using rule 19 (prop -> prop DISJUNCTION prop .) ]
+  ! NOT_EQUAL_TO    [ reduce using rule 19 (prop -> prop DISJUNCTION prop .) ]
+  ! GREATER_THAN_EQUAL_TO [ reduce using rule 19 (prop -> prop DISJUNCTION prop .) ]
+  ! GREATER_THAN    [ reduce using rule 19 (prop -> prop DISJUNCTION prop .) ]
+  ! CONS            [ reduce using rule 19 (prop -> prop DISJUNCTION prop .) ]
+  ! CONJUNCTION     [ reduce using rule 19 (prop -> prop DISJUNCTION prop .) ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
+
+
+state 53
+
+    (35) prop -> prop LEFT_BRACKET prop . RIGHT_BRACKET
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    RIGHT_BRACKET   shift and go to state 61
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+    IN              shift and go to state 19
+    LESS_THAN       shift and go to state 20
+    LESS_THAN_EQUAL_TO shift and go to state 21
+    EQUAL_TO        shift and go to state 22
+    NOT_EQUAL_TO    shift and go to state 23
+    GREATER_THAN_EQUAL_TO shift and go to state 24
+    GREATER_THAN    shift and go to state 25
+    CONS            shift and go to state 26
+    CONJUNCTION     shift and go to state 27
+    DISJUNCTION     shift and go to state 28
+    LEFT_BRACKET    shift and go to state 29
+
+
+state 54
+
+    (20) prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .
+
+    PLUS            reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    MINUS           reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    TIMES           reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    DIVIDE          reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    INT_DIVIDE      reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    MOD             reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    IN              reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    LESS_THAN       reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    LESS_THAN_EQUAL_TO reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    EQUAL_TO        reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    NOT_EQUAL_TO    reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    GREATER_THAN_EQUAL_TO reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    GREATER_THAN    reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    CONS            reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    CONJUNCTION     reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    DISJUNCTION     reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    LEFT_BRACKET    reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    $end            reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    RIGHT_PARENTHESIS reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    COMMA           reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    RIGHT_BRACKET   reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    NEGATION        reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    LEFT_PARENTHESIS reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    TRUE            reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    FALSE           reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    INTEGER         reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    REAL            reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    STRING          reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+    HASHTAG         reduce using rule 20 (prop -> LEFT_PARENTHESIS prop RIGHT_PARENTHESIS .)
+
+
+state 55
+
+    (30) prop -> LEFT_PARENTHESIS prop COMMA . prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> LEFT_PARENTHESIS prop COMMA . RIGHT_PARENTHESIS
+    (32) prop_tup_contents -> . prop
+    (33) prop_tup_contents -> . prop COMMA prop_tup_contents
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    RIGHT_PARENTHESIS shift and go to state 64
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 62
+    prop_tup_contents              shift and go to state 63
+
+state 56
+
+    (26) prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .
+
+    PLUS            reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    MINUS           reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    TIMES           reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    DIVIDE          reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    INT_DIVIDE      reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    MOD             reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    IN              reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    LESS_THAN       reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    LESS_THAN_EQUAL_TO reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    EQUAL_TO        reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    NOT_EQUAL_TO    reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    GREATER_THAN_EQUAL_TO reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    GREATER_THAN    reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    CONS            reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    CONJUNCTION     reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    DISJUNCTION     reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    LEFT_BRACKET    reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    $end            reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    RIGHT_PARENTHESIS reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    COMMA           reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    RIGHT_BRACKET   reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    NEGATION        reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    LEFT_PARENTHESIS reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    TRUE            reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    FALSE           reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    INTEGER         reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    REAL            reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    STRING          reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+    HASHTAG         reduce using rule 26 (prop -> LEFT_BRACKET prop_contents RIGHT_BRACKET .)
+
+
+state 57
+
+    (29) prop_contents -> prop COMMA . prop_contents
+    (28) prop_contents -> . prop
+    (29) prop_contents -> . prop COMMA prop_contents
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 35
+    prop_contents                  shift and go to state 65
+
+state 58
+
+    (34) prop -> HASHTAG prop prop .
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    PLUS            reduce using rule 34 (prop -> HASHTAG prop prop .)
+    MINUS           reduce using rule 34 (prop -> HASHTAG prop prop .)
+    TIMES           reduce using rule 34 (prop -> HASHTAG prop prop .)
+    DIVIDE          reduce using rule 34 (prop -> HASHTAG prop prop .)
+    INT_DIVIDE      reduce using rule 34 (prop -> HASHTAG prop prop .)
+    MOD             reduce using rule 34 (prop -> HASHTAG prop prop .)
+    IN              reduce using rule 34 (prop -> HASHTAG prop prop .)
+    LESS_THAN       reduce using rule 34 (prop -> HASHTAG prop prop .)
+    LESS_THAN_EQUAL_TO reduce using rule 34 (prop -> HASHTAG prop prop .)
+    EQUAL_TO        reduce using rule 34 (prop -> HASHTAG prop prop .)
+    NOT_EQUAL_TO    reduce using rule 34 (prop -> HASHTAG prop prop .)
+    GREATER_THAN_EQUAL_TO reduce using rule 34 (prop -> HASHTAG prop prop .)
+    GREATER_THAN    reduce using rule 34 (prop -> HASHTAG prop prop .)
+    CONS            reduce using rule 34 (prop -> HASHTAG prop prop .)
+    CONJUNCTION     reduce using rule 34 (prop -> HASHTAG prop prop .)
+    DISJUNCTION     reduce using rule 34 (prop -> HASHTAG prop prop .)
+    LEFT_BRACKET    reduce using rule 34 (prop -> HASHTAG prop prop .)
+    $end            reduce using rule 34 (prop -> HASHTAG prop prop .)
+    RIGHT_PARENTHESIS reduce using rule 34 (prop -> HASHTAG prop prop .)
+    COMMA           reduce using rule 34 (prop -> HASHTAG prop prop .)
+    RIGHT_BRACKET   reduce using rule 34 (prop -> HASHTAG prop prop .)
+    NEGATION        reduce using rule 34 (prop -> HASHTAG prop prop .)
+    LEFT_PARENTHESIS reduce using rule 34 (prop -> HASHTAG prop prop .)
+    TRUE            reduce using rule 34 (prop -> HASHTAG prop prop .)
+    FALSE           reduce using rule 34 (prop -> HASHTAG prop prop .)
+    INTEGER         reduce using rule 34 (prop -> HASHTAG prop prop .)
+    REAL            reduce using rule 34 (prop -> HASHTAG prop prop .)
+    STRING          reduce using rule 34 (prop -> HASHTAG prop prop .)
+    HASHTAG         reduce using rule 34 (prop -> HASHTAG prop prop .)
+
+  ! PLUS            [ shift and go to state 13 ]
+  ! MINUS           [ shift and go to state 14 ]
+  ! TIMES           [ shift and go to state 15 ]
+  ! DIVIDE          [ shift and go to state 16 ]
+  ! INT_DIVIDE      [ shift and go to state 17 ]
+  ! MOD             [ shift and go to state 18 ]
+  ! IN              [ shift and go to state 19 ]
+  ! LESS_THAN       [ shift and go to state 20 ]
+  ! LESS_THAN_EQUAL_TO [ shift and go to state 21 ]
+  ! EQUAL_TO        [ shift and go to state 22 ]
+  ! NOT_EQUAL_TO    [ shift and go to state 23 ]
+  ! GREATER_THAN_EQUAL_TO [ shift and go to state 24 ]
+  ! GREATER_THAN    [ shift and go to state 25 ]
+  ! CONS            [ shift and go to state 26 ]
+  ! CONJUNCTION     [ shift and go to state 27 ]
+  ! DISJUNCTION     [ shift and go to state 28 ]
+  ! LEFT_BRACKET    [ shift and go to state 29 ]
+
+
+state 59
+
+    (3) prop -> prop MINUS . prop
+    (9) prop -> MINUS . INTEGER
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    INTEGER         shift and go to state 66
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 38
+
+state 60
+
+    (35) prop -> prop LEFT_BRACKET . prop RIGHT_BRACKET
+    (26) prop -> LEFT_BRACKET . prop_contents RIGHT_BRACKET
+    (27) prop -> LEFT_BRACKET . RIGHT_BRACKET
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+    (28) prop_contents -> . prop
+    (29) prop_contents -> . prop COMMA prop_contents
+
+    RIGHT_BRACKET   shift and go to state 34
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 67
+    prop_contents                  shift and go to state 33
+
+state 61
+
+    (35) prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .
+
+    PLUS            reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    MINUS           reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    TIMES           reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    DIVIDE          reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    INT_DIVIDE      reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    MOD             reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    IN              reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    LESS_THAN       reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    LESS_THAN_EQUAL_TO reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    EQUAL_TO        reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    NOT_EQUAL_TO    reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    GREATER_THAN_EQUAL_TO reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    GREATER_THAN    reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    CONS            reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    CONJUNCTION     reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    DISJUNCTION     reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    LEFT_BRACKET    reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    $end            reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    RIGHT_PARENTHESIS reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    COMMA           reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    RIGHT_BRACKET   reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    NEGATION        reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    LEFT_PARENTHESIS reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    TRUE            reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    FALSE           reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    INTEGER         reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    REAL            reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    STRING          reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+    HASHTAG         reduce using rule 35 (prop -> prop LEFT_BRACKET prop RIGHT_BRACKET .)
+
+
+state 62
+
+    (32) prop_tup_contents -> prop .
+    (33) prop_tup_contents -> prop . COMMA prop_tup_contents
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+
+    RIGHT_PARENTHESIS reduce using rule 32 (prop_tup_contents -> prop .)
+    COMMA           shift and go to state 68
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+    IN              shift and go to state 19
+    LESS_THAN       shift and go to state 20
+    LESS_THAN_EQUAL_TO shift and go to state 21
+    EQUAL_TO        shift and go to state 22
+    NOT_EQUAL_TO    shift and go to state 23
+    GREATER_THAN_EQUAL_TO shift and go to state 24
+    GREATER_THAN    shift and go to state 25
+    CONS            shift and go to state 26
+    CONJUNCTION     shift and go to state 27
+    DISJUNCTION     shift and go to state 28
+    LEFT_BRACKET    shift and go to state 29
+
+
+state 63
+
+    (30) prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents . RIGHT_PARENTHESIS
+
+    RIGHT_PARENTHESIS shift and go to state 69
+
+
+state 64
+
+    (31) prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .
+
+    PLUS            reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    MINUS           reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    TIMES           reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    DIVIDE          reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    INT_DIVIDE      reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    MOD             reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    IN              reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    LESS_THAN       reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    LESS_THAN_EQUAL_TO reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    EQUAL_TO        reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    NOT_EQUAL_TO    reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    GREATER_THAN_EQUAL_TO reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    GREATER_THAN    reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    CONS            reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    CONJUNCTION     reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    DISJUNCTION     reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    LEFT_BRACKET    reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    $end            reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    RIGHT_PARENTHESIS reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    COMMA           reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    RIGHT_BRACKET   reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    NEGATION        reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    LEFT_PARENTHESIS reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    TRUE            reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    FALSE           reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    INTEGER         reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    REAL            reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    STRING          reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+    HASHTAG         reduce using rule 31 (prop -> LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS .)
+
+
+state 65
+
+    (29) prop_contents -> prop COMMA prop_contents .
+
+    RIGHT_BRACKET   reduce using rule 29 (prop_contents -> prop COMMA prop_contents .)
+
+
+state 66
+
+    (9) prop -> MINUS INTEGER .
+    (23) prop -> INTEGER .
+
+  ! reduce/reduce conflict for PLUS resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for MINUS resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for TIMES resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for DIVIDE resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for INT_DIVIDE resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for MOD resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for IN resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for LESS_THAN resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for LESS_THAN_EQUAL_TO resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for EQUAL_TO resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for NOT_EQUAL_TO resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for GREATER_THAN_EQUAL_TO resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for GREATER_THAN resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for CONS resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for CONJUNCTION resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for DISJUNCTION resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for LEFT_BRACKET resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for $end resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for RIGHT_PARENTHESIS resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for COMMA resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for RIGHT_BRACKET resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for NEGATION resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for LEFT_PARENTHESIS resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for TRUE resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for FALSE resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for INTEGER resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for REAL resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for STRING resolved using rule 9 (prop -> MINUS INTEGER .)
+  ! reduce/reduce conflict for HASHTAG resolved using rule 9 (prop -> MINUS INTEGER .)
+    PLUS            reduce using rule 9 (prop -> MINUS INTEGER .)
+    MINUS           reduce using rule 9 (prop -> MINUS INTEGER .)
+    TIMES           reduce using rule 9 (prop -> MINUS INTEGER .)
+    DIVIDE          reduce using rule 9 (prop -> MINUS INTEGER .)
+    INT_DIVIDE      reduce using rule 9 (prop -> MINUS INTEGER .)
+    MOD             reduce using rule 9 (prop -> MINUS INTEGER .)
+    IN              reduce using rule 9 (prop -> MINUS INTEGER .)
+    LESS_THAN       reduce using rule 9 (prop -> MINUS INTEGER .)
+    LESS_THAN_EQUAL_TO reduce using rule 9 (prop -> MINUS INTEGER .)
+    EQUAL_TO        reduce using rule 9 (prop -> MINUS INTEGER .)
+    NOT_EQUAL_TO    reduce using rule 9 (prop -> MINUS INTEGER .)
+    GREATER_THAN_EQUAL_TO reduce using rule 9 (prop -> MINUS INTEGER .)
+    GREATER_THAN    reduce using rule 9 (prop -> MINUS INTEGER .)
+    CONS            reduce using rule 9 (prop -> MINUS INTEGER .)
+    CONJUNCTION     reduce using rule 9 (prop -> MINUS INTEGER .)
+    DISJUNCTION     reduce using rule 9 (prop -> MINUS INTEGER .)
+    LEFT_BRACKET    reduce using rule 9 (prop -> MINUS INTEGER .)
+    $end            reduce using rule 9 (prop -> MINUS INTEGER .)
+    RIGHT_PARENTHESIS reduce using rule 9 (prop -> MINUS INTEGER .)
+    COMMA           reduce using rule 9 (prop -> MINUS INTEGER .)
+    RIGHT_BRACKET   reduce using rule 9 (prop -> MINUS INTEGER .)
+    NEGATION        reduce using rule 9 (prop -> MINUS INTEGER .)
+    LEFT_PARENTHESIS reduce using rule 9 (prop -> MINUS INTEGER .)
+    TRUE            reduce using rule 9 (prop -> MINUS INTEGER .)
+    FALSE           reduce using rule 9 (prop -> MINUS INTEGER .)
+    INTEGER         reduce using rule 9 (prop -> MINUS INTEGER .)
+    REAL            reduce using rule 9 (prop -> MINUS INTEGER .)
+    STRING          reduce using rule 9 (prop -> MINUS INTEGER .)
+    HASHTAG         reduce using rule 9 (prop -> MINUS INTEGER .)
+
+  ! PLUS            [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! MINUS           [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! TIMES           [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! DIVIDE          [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! INT_DIVIDE      [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! MOD             [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! IN              [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! LESS_THAN       [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! LESS_THAN_EQUAL_TO [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! EQUAL_TO        [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! NOT_EQUAL_TO    [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! GREATER_THAN_EQUAL_TO [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! GREATER_THAN    [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! CONS            [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! CONJUNCTION     [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! DISJUNCTION     [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! LEFT_BRACKET    [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! $end            [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! RIGHT_PARENTHESIS [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! COMMA           [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! RIGHT_BRACKET   [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! NEGATION        [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! LEFT_PARENTHESIS [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! TRUE            [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! FALSE           [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! INTEGER         [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! REAL            [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! STRING          [ reduce using rule 23 (prop -> INTEGER .) ]
+  ! HASHTAG         [ reduce using rule 23 (prop -> INTEGER .) ]
+
+
+state 67
+
+    (35) prop -> prop LEFT_BRACKET prop . RIGHT_BRACKET
+    (2) prop -> prop . PLUS prop
+    (3) prop -> prop . MINUS prop
+    (4) prop -> prop . TIMES prop
+    (5) prop -> prop . DIVIDE prop
+    (6) prop -> prop . INT_DIVIDE prop
+    (7) prop -> prop . MOD prop
+    (8) prop -> prop . IN prop
+    (10) prop -> prop . LESS_THAN prop
+    (11) prop -> prop . LESS_THAN_EQUAL_TO prop
+    (12) prop -> prop . EQUAL_TO prop
+    (13) prop -> prop . NOT_EQUAL_TO prop
+    (14) prop -> prop . GREATER_THAN_EQUAL_TO prop
+    (15) prop -> prop . GREATER_THAN prop
+    (16) prop -> prop . CONS prop
+    (18) prop -> prop . CONJUNCTION prop
+    (19) prop -> prop . DISJUNCTION prop
+    (35) prop -> prop . LEFT_BRACKET prop RIGHT_BRACKET
+    (28) prop_contents -> prop .
+    (29) prop_contents -> prop . COMMA prop_contents
+
+  ! shift/reduce conflict for RIGHT_BRACKET resolved as shift
+    RIGHT_BRACKET   shift and go to state 61
+    PLUS            shift and go to state 13
+    MINUS           shift and go to state 14
+    TIMES           shift and go to state 15
+    DIVIDE          shift and go to state 16
+    INT_DIVIDE      shift and go to state 17
+    MOD             shift and go to state 18
+    IN              shift and go to state 19
+    LESS_THAN       shift and go to state 20
+    LESS_THAN_EQUAL_TO shift and go to state 21
+    EQUAL_TO        shift and go to state 22
+    NOT_EQUAL_TO    shift and go to state 23
+    GREATER_THAN_EQUAL_TO shift and go to state 24
+    GREATER_THAN    shift and go to state 25
+    CONS            shift and go to state 26
+    CONJUNCTION     shift and go to state 27
+    DISJUNCTION     shift and go to state 28
+    LEFT_BRACKET    shift and go to state 29
+    COMMA           shift and go to state 57
+
+  ! RIGHT_BRACKET   [ reduce using rule 28 (prop_contents -> prop .) ]
+
+
+state 68
+
+    (33) prop_tup_contents -> prop COMMA . prop_tup_contents
+    (32) prop_tup_contents -> . prop
+    (33) prop_tup_contents -> . prop COMMA prop_tup_contents
+    (2) prop -> . prop PLUS prop
+    (3) prop -> . prop MINUS prop
+    (4) prop -> . prop TIMES prop
+    (5) prop -> . prop DIVIDE prop
+    (6) prop -> . prop INT_DIVIDE prop
+    (7) prop -> . prop MOD prop
+    (8) prop -> . prop IN prop
+    (9) prop -> . MINUS INTEGER
+    (10) prop -> . prop LESS_THAN prop
+    (11) prop -> . prop LESS_THAN_EQUAL_TO prop
+    (12) prop -> . prop EQUAL_TO prop
+    (13) prop -> . prop NOT_EQUAL_TO prop
+    (14) prop -> . prop GREATER_THAN_EQUAL_TO prop
+    (15) prop -> . prop GREATER_THAN prop
+    (16) prop -> . prop CONS prop
+    (17) prop -> . NEGATION prop
+    (18) prop -> . prop CONJUNCTION prop
+    (19) prop -> . prop DISJUNCTION prop
+    (20) prop -> . LEFT_PARENTHESIS prop RIGHT_PARENTHESIS
+    (21) prop -> . TRUE
+    (22) prop -> . FALSE
+    (23) prop -> . INTEGER
+    (24) prop -> . REAL
+    (25) prop -> . STRING
+    (26) prop -> . LEFT_BRACKET prop_contents RIGHT_BRACKET
+    (27) prop -> . LEFT_BRACKET RIGHT_BRACKET
+    (30) prop -> . LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS
+    (31) prop -> . LEFT_PARENTHESIS prop COMMA RIGHT_PARENTHESIS
+    (34) prop -> . HASHTAG prop prop
+    (35) prop -> . prop LEFT_BRACKET prop RIGHT_BRACKET
+
+    MINUS           shift and go to state 3
+    NEGATION        shift and go to state 5
+    LEFT_PARENTHESIS shift and go to state 6
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 8
+    INTEGER         shift and go to state 4
+    REAL            shift and go to state 9
+    STRING          shift and go to state 10
+    LEFT_BRACKET    shift and go to state 11
+    HASHTAG         shift and go to state 12
+
+    prop                           shift and go to state 62
+    prop_tup_contents              shift and go to state 70
+
+state 69
+
+    (30) prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .
+
+    PLUS            reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    MINUS           reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    TIMES           reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    DIVIDE          reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    INT_DIVIDE      reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    MOD             reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    IN              reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    LESS_THAN       reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    LESS_THAN_EQUAL_TO reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    EQUAL_TO        reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    NOT_EQUAL_TO    reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    GREATER_THAN_EQUAL_TO reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    GREATER_THAN    reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    CONS            reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    CONJUNCTION     reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    DISJUNCTION     reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    LEFT_BRACKET    reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    $end            reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    RIGHT_PARENTHESIS reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    COMMA           reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    RIGHT_BRACKET   reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    NEGATION        reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    LEFT_PARENTHESIS reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    TRUE            reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    FALSE           reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    INTEGER         reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    REAL            reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    STRING          reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+    HASHTAG         reduce using rule 30 (prop -> LEFT_PARENTHESIS prop COMMA prop_tup_contents RIGHT_PARENTHESIS .)
+
+
+state 70
+
+    (33) prop_tup_contents -> prop COMMA prop_tup_contents .
+
+    RIGHT_PARENTHESIS reduce using rule 33 (prop_tup_contents -> prop COMMA prop_tup_contents .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for RIGHT_BRACKET in state 67 resolved as shift
+WARNING: reduce/reduce conflict in state 66 resolved using rule (prop -> MINUS INTEGER)
+WARNING: rejected rule (prop -> INTEGER) in state 66

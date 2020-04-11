@@ -292,14 +292,14 @@ def p_prop_biconditional(p):
     p[0] = Biconditional(p[1], p[3])
 
 
-def p_prop_true(p):
-    'prop : TRUE'
-    p[0] = AST_True()
+# def p_prop_true(p):
+#     'prop : TRUE'
+#     p[0] = AST_True()
 
 
-def p_prop_false(p):
-    'prop : FALSE'
-    p[0] = AST_False()
+# def p_prop_false(p):
+#     'prop : FALSE'
+#     p[0] = AST_False()
 
 
 def p_prop_parenthetical(p):
