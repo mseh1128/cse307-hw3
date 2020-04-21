@@ -3,6 +3,9 @@ import ply.lex as lex
 import re
 import sys
 
+# NAME: Manav Sehgal
+# ID#: 111581702
+
 
 class Node():
     def __init__(self):
@@ -63,8 +66,8 @@ class Addition(Node):
     def typecheck(self):
         leftType = self.left.typecheck()
         rightType = self.right.typecheck()
-        print("LEFT TYPE IS " + str(leftType))
-        print("RIGHT TYPE IS " + str(rightType))
+        # print("LEFT TYPE IS " + str(leftType))
+        # print("RIGHT TYPE IS " + str(rightType))
         if(leftType in ["number", "string", "list"] and leftType == rightType):
             return leftType
         return False
@@ -72,7 +75,8 @@ class Addition(Node):
     def eval(self):
         if(self.typecheck()):
             return self.left.eval()+self.right.eval()
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Addition"
@@ -92,8 +96,8 @@ class Membership(Node):
     def typecheck(self):
         leftType = self.left.typecheck()
         rightType = self.right.typecheck()
-        print("LEFT TYPE IS " + str(leftType))
-        print("RIGHT TYPE IS " + str(rightType))
+        # print("LEFT TYPE IS " + str(leftType))
+        # print("RIGHT TYPE IS " + str(rightType))
         # anything could be in left
         if(rightType in ["string", "list"]):
             return 'Boolean'
@@ -102,7 +106,8 @@ class Membership(Node):
     def eval(self):
         if(self.typecheck()):
             return self.left.eval() in self.right.eval()
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Membership"
@@ -122,8 +127,8 @@ class Cons(Node):
     def typecheck(self):
         leftType = self.left.typecheck()
         rightType = self.right.typecheck()
-        print("LEFT TYPE IS " + str(leftType))
-        print("RIGHT TYPE IS " + str(rightType))
+        # print("LEFT TYPE IS " + str(leftType))
+        # print("RIGHT TYPE IS " + str(rightType))
         # anything could be in leftType
         if(rightType in ["list"]):
             return True
@@ -133,7 +138,8 @@ class Cons(Node):
         if(self.typecheck()):
             self.right.value.insert(0, self.left)
             return self.right.eval()
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Cons"
@@ -153,8 +159,8 @@ class Subtraction(Node):
     def typecheck(self):
         leftType = self.left.typecheck()
         rightType = self.right.typecheck()
-        print("LEFT TYPE IS " + str(leftType))
-        print("RIGHT TYPE IS " + str(rightType))
+        # print("LEFT TYPE IS " + str(leftType))
+        # print("RIGHT TYPE IS " + str(rightType))
         if(leftType in ["number"] and leftType == rightType):
             return leftType
         return False
@@ -162,7 +168,8 @@ class Subtraction(Node):
     def eval(self):
         if(self.typecheck()):
             return self.left.eval()-self.right.eval()
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Subtraction"
@@ -189,7 +196,8 @@ class Times(Node):
     def eval(self):
         if(self.typecheck()):
             return self.left.eval()*self.right.eval()
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Multiplication"
@@ -218,7 +226,8 @@ class Divide(Node):
     def eval(self):
         if(self.typecheck()):
             return float(self.left.eval()/self.right.eval())
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Divide"
@@ -245,7 +254,8 @@ class IntDivide(Node):
     def eval(self):
         if(self.typecheck()):
             return self.left.eval()//self.right.eval()
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "IntDivide"
@@ -272,7 +282,8 @@ class Modulus(Node):
     def eval(self):
         if(self.typecheck()):
             return self.left.eval() % self.right.eval()
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Modulus"
@@ -328,8 +339,8 @@ class Conjunction(Node):
     def typecheck(self):
         leftType = self.left.typecheck()
         rightType = self.right.typecheck()
-        print("CONJ: LEFT TYPE IS " + str(leftType))
-        print("CONJ: RIGHT TYPE IS " + str(rightType))
+        # print("CONJ: LEFT TYPE IS " + str(leftType))
+        # print("CONJ: RIGHT TYPE IS " + str(rightType))
         if(leftType == "Boolean" and leftType == rightType):
             return leftType
         return False
@@ -337,7 +348,8 @@ class Conjunction(Node):
     def eval(self):
         if(self.typecheck()):
             return self.left.eval() and self.right.eval()
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Conjunction"
@@ -357,8 +369,8 @@ class Disjunction(Node):
     def typecheck(self):
         leftType = self.left.typecheck()
         rightType = self.right.typecheck()
-        print("LEFT TYPE IS " + str(leftType))
-        print("RIGHT TYPE IS " + str(rightType))
+        # print("LEFT TYPE IS " + str(leftType))
+        # print("RIGHT TYPE IS " + str(rightType))
         if(leftType == "Boolean" and leftType == rightType):
             return leftType
         return False
@@ -366,7 +378,8 @@ class Disjunction(Node):
     def eval(self):
         if(self.typecheck()):
             return self.left.eval() or self.right.eval()
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Disjunction"
@@ -383,7 +396,7 @@ class Negation(Node):
 
     def typecheck(self):
         childType = self.child.typecheck()
-        print("CHILD TYPE IS " + str(childType))
+        # print("CHILD TYPE IS " + str(childType))
         if(childType == "Boolean"):
             return childType
         return False
@@ -416,7 +429,8 @@ class LessThan(Node):
     def eval(self):
         if(self.typecheck()):
             return self.left.eval() < self.right.eval()
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Less Than"
@@ -443,7 +457,8 @@ class LessThanEqualTo(Node):
     def eval(self):
         if(self.typecheck()):
             return self.left.eval() <= self.right.eval()
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Less Than Equal To"
@@ -470,7 +485,8 @@ class EqualTo(Node):
     def eval(self):
         if(self.typecheck()):
             return self.left.eval() == self.right.eval()
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Equal To"
@@ -497,7 +513,8 @@ class NotEqualTo(Node):
     def eval(self):
         if(self.typecheck()):
             return self.left.eval() != self.right.eval()
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Not Equal To"
@@ -524,7 +541,8 @@ class GreaterThanEqualTo(Node):
     def eval(self):
         if(self.typecheck()):
             return self.left.eval() >= self.right.eval()
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Greater Than Equal To"
@@ -551,7 +569,8 @@ class GreaterThan(Node):
     def eval(self):
         if(self.typecheck()):
             return self.left.eval() > self.right.eval()
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Greater Than"
@@ -575,8 +594,8 @@ class TupleIndexing(Node):
         if(childType in ["tuple"] and (idxType == "number" and self.idx.actualType == "integer")):
             nodeAtIdx = self.child.getNodeAtIndex(self.idx.eval())
             if(nodeAtIdx == None):
-                print("Semantic Error")
-                return None
+
+                return "SEMANTIC ERROR"
             else:
                 return nodeAtIdx.typecheck()
             return False
@@ -585,11 +604,12 @@ class TupleIndexing(Node):
         if(self.typecheck()):
             nodeAtIdx = (self.child.getNodeAtIndex(self.idx.eval()))
             if(nodeAtIdx == None):
-                print("Semantic Error")
-                return None
+
+                return "SEMANTIC ERROR"
             else:
                 return nodeAtIdx.eval()
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "TupleIndexing"
@@ -608,25 +628,33 @@ class RegularIndexing(Node):
         self.idx.parent = self
 
     def typecheck(self):
-        childType = self.child.typecheck()
-        idxType = self.idx.typecheck()
-        if(childType in ["list", "string"] and (idxType == "number" and self.idx.actualType == "integer")):
-            if(childType == "list"):
-                nodeAtIdx = (self.child.getNodeAtIndex(self.idx.eval()))
-                if(nodeAtIdx == None):
-                    print("Semantic Error")
-                    return None
-                else:
-                    return nodeAtIdx.typecheck()
-            else:
-                # if string make sure whatever at index is not null!
-                idx_val = self.idx.eval()
-                if(idx_val < 0 or idx_val >= len(self.child.eval())):
-                    print("Invalid index")
-                    print("Semantic Error")
-                    return None
-                else:
-                    return childType
+        # print("CHILD TYPE IS: " + childType)
+        # idxType = self.idx.typecheck()
+        if(self.child.typecheck() in ["list", "string"] and self.idx.typecheck() == "number" and self.idx.actualType == "integer"):
+            print("Valid Type: RegularIndexing")
+            return "list"
+        else:
+            print("Semantic Error: RegularIndexing")
+            return False
+        # if(childType in ["list", "string"] and (idxType == "number" and self.idx.actualType == "integer")):
+            # if(childType == "list"):
+            #     if(not isinstance(self.child, RegularIndexing)):
+            #         nodeAtIdx = (self.child.getNodeAtIndex(self.idx.eval()))
+            #         if(nodeAtIdx == None):
+
+            #             return "SEMANTIC ERROR"
+            #         else:
+            #             return nodeAtIdx.typecheck()
+            #     return 'list'
+            # else:
+            #     # if string make sure whatever at index is not null!
+            #     idx_val = self.idx.eval()
+            #     if(idx_val < 0 or idx_val >= len(self.child.eval())):
+            #         # print("Invalid index")
+
+            #         return "SEMANTIC ERROR"
+            #     else:
+            #         return childType
         return False
 
     def eval(self):
@@ -634,11 +662,11 @@ class RegularIndexing(Node):
             return self.child.eval()[self.idx.eval()]
             # nodeAtIdx = (self.child.getNodeAtIndex(self.idx.eval()))
             # if(nodeAtIdx == None):
-            #     print("Semantic Error")
-            #     return None
-            # else:
+            #
+            # else: "SEMANTIC ERROR"
             #     return nodeAtIdx.eval()
-        print("Semantic Error")
+
+        return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "ListOrStringIndexing"
@@ -657,8 +685,8 @@ class List(Node):
             # list's value is its node
             self.value = [initialNode]
             initialNode.parent = self
-            print("INITIAL NODE IS: ")
-            print(initialNode)
+            # print("INITIAL NODE IS: ")
+            # print(initialNode)
 
     def typecheck(self):
         return self.type
@@ -667,10 +695,14 @@ class List(Node):
         nodeToAdd.parent = self
         self.value.insert(0, nodeToAdd)
 
+    def updateListNode(self, idx, node):
+        self.value[idx] = node
+
     def getNodeAtIndex(self, idx):
         if(idx < 0 or idx >= len(self.value)):
-            print("Invalid index")
-            return None
+            # print("Invalid index")
+
+            return "SEMANTIC ERROR"
         else:
             return self.value[idx]
 
@@ -697,8 +729,8 @@ class Tuple(Node):
             # list's value is its node
             self.value = [initialNode]
             initialNode.parent = self
-            print("INITIAL NODE IS: ")
-            print(initialNode)
+            # print("INITIAL NODE IS: ")
+            # print(initialNode)
 
     def typecheck(self):
         return self.type
@@ -710,8 +742,8 @@ class Tuple(Node):
     def getNodeAtIndex(self, idx):
         idx = idx-1
         if(idx < 0 or idx >= len(self.value)):
-            print("Invalid index")
-            return None
+            # print("Invalid index")
+            return
         else:
             return self.value[idx]
 
@@ -728,11 +760,122 @@ class Tuple(Node):
         return res
 
 
-tokens = (
+class Variable(Node):
+    def __init__(self, name):
+        super().__init__()
+        self.name = name
+        self.type = "variable"
+
+    # add typecheck?
+    def typecheck(self):
+        if self.name in names:
+            return names[self.name].type
+        else:
+            return None
+
+    def eval(self):
+        if self.name in names:
+            return names[self.name].eval()
+        else:
+            print("Undefined name '%s'" % self.name)
+            return None
+
+    def varOnlyEval(self):
+        if self.name in names:
+            return names[self.name]
+        else:
+            print("Undefined name '%s'" % self.name)
+            return None
+
+    def __str__(self):
+        res = "\t" * self.parentCount() + "Variable: " + self.name
+        if self.name in names:
+            res += " : " + str(names[self.name])
+        else:
+            res += " : " + "None"
+        return res
+
+
+class ListIndexAssignment(Node):
+    def __init__(self, var, idx, val):
+        super().__init__()
+        self.var = var
+        self.idx = idx
+        self.val = val
+        self.type = "ListIndexAssignment"
+        self.var.parent = self
+        self.idx.parent = self
+        self.val.parent = self
+
+    # add typecheck?
+    def typecheck(self):
+        # val could be anything bc its a list
+        # right now allows all lists
+        # right now only does not support expressions inside self
+        if(self.var.typecheck() == "list" and self.idx.typecheck() == "number"
+           and self.idx.actualType == "integer"):
+            print("Valid Type: ListIndexAssignment")
+            return self.type
+        else:
+            print("Semantic Error: ListIndexAssignment")
+            return False
+
+    def eval(self):
+        if(self.typecheck()):
+            self.var.varOnlyEval().updateListNode(self.idx.eval(), self.val)
+            return None
+        return "SEMANTIC ERROR"
+
+    def __str__(self):
+        res = "\t" * self.parentCount() + "ListIndexAssignment"
+        res += "\n" + str(self.var)
+        res += "\n" + str(self.idx)
+        res += "\n" + str(self.val)
+        return res
+
+
+class Print(Node):
+    def __init__(self, child):
+        super().__init__()
+        self.child = child
+        self.type = "Print"
+        self.child.parent = self
+
+    # add typecheck?
+    def typecheck(self):
+        # can print anything except null?
+        # if(self.c)
+        return True
+
+    def eval(self):
+        if(self.typecheck()):
+            # PRINT OR RETURN?　
+            # evaluated so will use return ?
+            return self.child.eval()
+        return "SEMANTIC ERROR"
+
+    def __str__(self):
+        res = "\t" * self.parentCount() + "Print"
+        res += "\n" + str(self.child)
+        return res
+
+
+reserved = {
+    'True': 'TRUE',
+    'False': 'FALSE',
+    'div': 'INT_DIVIDE',
+    'mod': 'MOD',
+    'in': 'IN',
+    'not': 'NEGATION',
+    'andalso': 'CONJUNCTION',
+    'orelse': 'DISJUNCTION',
+    'print': 'PRINT'
+}
+
+
+tokens = [
     'INTEGER',
     'REAL',
-    'TRUE',
-    'FALSE',
     'STRING',
     'LEFT_PARENTHESIS',
     'RIGHT_PARENTHESIS',
@@ -743,45 +886,36 @@ tokens = (
     'RAISED_TO_POWER_OF',
     'TIMES',
     'DIVIDE',
-    'INT_DIVIDE',
-    'MOD',
     'PLUS',
     'MINUS',
-    'IN',
     'CONS',
-    'NEGATION',
-    'CONJUNCTION',
-    'DISJUNCTION',
     'LESS_THAN',
     'LESS_THAN_EQUAL_TO',
     'EQUAL_TO',
     'NOT_EQUAL_TO',
     'GREATER_THAN_EQUAL_TO',
     'GREATER_THAN',
-)
+    'VARIABLE',
+    'EQUALS',
+    'SEMICOLON'
+] + list(reserved.values())
 
 # maybe exclude -0 as an option
 
-t_TRUE = r'True'
-t_FALSE = r'False'
+t_EQUALS = r'='
 t_LEFT_PARENTHESIS = r'\('
 t_RIGHT_PARENTHESIS = r'\)'
 t_COMMA = r','
+t_SEMICOLON = r';'
 t_HASHTAG = r'\#'
 t_LEFT_BRACKET = r'\['
 t_RIGHT_BRACKET = r']'
 t_RAISED_TO_POWER_OF = r'\*{2}'
 t_TIMES = r'\*'
 t_DIVIDE = r'/'
-t_INT_DIVIDE = r'div'
-t_MOD = r'mod'
 t_PLUS = r'\+'
 t_MINUS = r'-'
-t_IN = r'in'
 t_CONS = r'::'
-t_NEGATION = r'not'
-t_CONJUNCTION = r'andalso'
-t_DISJUNCTION = r'orelse'
 t_LESS_THAN = r'<'
 t_LESS_THAN_EQUAL_TO = r'<='
 t_EQUAL_TO = r'=='
@@ -792,17 +926,24 @@ t_GREATER_THAN = r'>'
 # Function based definition of VARIABLE tokens.
 
 
+def t_VARIABLE(t):
+    r'[a-zA-Z][a-zA-Z0-9_]*'
+    t.type = reserved.get(t.value, 'VARIABLE')
+    return t
+
+
 def t_STRING(t):
     r'(\'([^\'\"]*)\')|(\"([^\'\"]*)\")'
     try:
         # p = re.compile('(\'([^\'\"]*)\')|(\"([^\'\"]*)\")')
         # regexMatch = p.match(t.value)
-        if(lexer.lexmatch.group(3)):
-            t.value = lexer.lexmatch.group(3)
+        if(lexer.lexmatch.group(4)):
+            t.value = lexer.lexmatch.group(4)
         else:
-            t.value = lexer.lexmatch.group(5)
+            t.value = lexer.lexmatch.group(6)
     except Exception as e:
-        print("Error occurred %s", e)
+        pass
+        # print("Error occurred %s", e)
     return t
 
 
@@ -819,7 +960,7 @@ def t_REAL(t):
 def t_INTEGER(t):
     r'\d+'
     # uminus to account for subtraction!
-    print(t.value)
+    # print(t.value)
     try:
         t.value = int(t.value)
     except ValueError:
@@ -859,6 +1000,8 @@ def tokenize(inp):
         print(tok)
 
 
+names = {}
+
 precedence = (('left', 'DISJUNCTION'),
               ('left', 'CONJUNCTION'),
               ('left', 'NEGATION'),
@@ -883,8 +1026,29 @@ precedence = (('left', 'DISJUNCTION'),
 
 
 def p_expr(p):
-    '''expr : prop'''
+    '''expr : stat
+            | prop'''
     p[0] = p[1]
+
+
+def p_stat_assign(p):
+    'stat : VARIABLE EQUALS prop SEMICOLON'
+    names[p[1]] = p[3]
+    print(names)
+
+
+def p_stat_ListIndex_assign(p):
+    '''
+        stat : prop LEFT_BRACKET prop RIGHT_BRACKET EQUALS prop
+    '''
+    p[0] = ListIndexAssignment(p[1], p[3], p[6])
+
+
+def p_stat_Print(p):
+    '''
+        stat : PRINT LEFT_PARENTHESIS prop RIGHT_PARENTHESIS SEMICOLON
+    '''
+    p[0] = Print(p[3])
 
 
 def p_prop_plus(p):
@@ -984,6 +1148,11 @@ def p_prop_parenthetical(p):
     p[0] = p[2]
 
 
+def p_prop_variable(p):
+    'prop : VARIABLE'
+    p[0] = Variable(p[1])
+
+
 def p_prop_true(p):
     'prop : TRUE'
     p[0] = AST_True()
@@ -1025,10 +1194,10 @@ def p_prop_list_contents(p):
     | prop COMMA prop_contents
     '''
     if(len(p)-1 == 1):
-        print("Starting list")
+        # print("Starting list")
         p[0] = List(p[1])
     else:
-        print("Adding to existing list")
+        # print("Adding to existing list")
         p[3].addNodeToList(p[1])
         p[0] = p[3]
 
@@ -1049,10 +1218,10 @@ def p_prop_tuple_contents(p):
                         | prop COMMA prop_tup_contents
     '''
     if(len(p)-1 == 1):
-        print("Starting Tuple")
+        # print("Starting Tuple")
         p[0] = Tuple(p[1])
     else:
-        print("Adding to existing Tuple")
+        # print("Adding to existing Tuple")
         p[3].addNodeToTuple(p[1])
         p[0] = p[3]
 
@@ -1063,14 +1232,15 @@ def p_prop_tup_indexing(p):
 
 
 def p_prop_ListString_indexing(p):
-    ''' 
-        prop : prop LEFT_BRACKET prop RIGHT_BRACKET %prec INDEXING 
+    '''
+        prop : prop LEFT_BRACKET prop RIGHT_BRACKET %prec INDEXING
     '''
     p[0] = RegularIndexing(p[1], p[3])
 
 
 def p_error(p):
     print("Syntax error at '%s' (%d, %d)" % (p.value, p.lineno, p.lexpos))
+    # print("SYNTAX ERROR")
     sys.exit()
 
 
@@ -1083,9 +1253,17 @@ def parse(inp):
 
 
 def main():
+    # inp = input("Enter a proposition: ")
+    # tokenize(inp)
+    # with open(sys.argv[1]) as fp:
+    #     for line in fp:
+    #         result = parse(line)
+    #     # print(result)
+    #         if result is not None:
+    #             print(result.eval())
     while True:
         inp = input("Enter a proposition: ")
-        # tokenize(inp)
+        tokenize(inp)
         result = parse(inp)
         print(result)
         if result is not None:
