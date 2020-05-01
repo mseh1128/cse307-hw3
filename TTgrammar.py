@@ -254,6 +254,11 @@ def p_expr(p):
             | prop'''
     p[0] = p[1]
 
+def p_stat_block(p):
+    '''expr : stat
+            | prop'''
+    p[0] = p[1]
+
 
 def p_stat_assign_true(p):
     'stat : VARIABLE EQUALS TRUE'

@@ -66,8 +66,8 @@ class Addition(Node):
     def typecheck(self):
         leftType = self.left.typecheck()
         rightType = self.right.typecheck()
-        # print("LEFT TYPE IS " + str(leftType))
-        # print("RIGHT TYPE IS " + str(rightType))
+        print("LEFT TYPE IS " + str(leftType))
+        print("RIGHT TYPE IS " + str(rightType))
         if(leftType in ["number", "string", "list"] and leftType == rightType):
             return leftType
         return False
@@ -765,6 +765,8 @@ class Variable(Node):
         super().__init__()
         self.name = name
         self.type = "variable"
+        if self.name in names:
+            names[self.name].parent = self
 
     # add typecheck?
     def typecheck(self):
@@ -788,11 +790,11 @@ class Variable(Node):
             return None
 
     def __str__(self):
-        res = "\t" * self.parentCount() + "Variable: " + self.name
+        res = "\t" * self.parentCount() + "Variable: " + self.name + "\n"
         if self.name in names:
-            res += " : " + str(names[self.name])
+            res += str(names[self.name])
         else:
-            res += " : " + "None"
+            res += ":None"
         return res
 
 
@@ -849,14 +851,55 @@ class Print(Node):
 
     def eval(self):
         if(self.typecheck()):
-            # PRINT OR RETURN?　
-            # evaluated so will use return ?
-            return self.child.eval()
+            # printing to stdout but returning none
+            print(self.child.eval())
+            return None
         return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Print"
         res += "\n" + str(self.child)
+        return res
+
+
+class Block(Node):
+    def __init__(self, initialNode=None):
+        super().__init__()
+        self.type = "block"
+        if initialNode is None:
+            self.value = []
+        else:
+            self.value = [initialNode]
+            initialNode.parent = self
+
+    def typecheck(self):
+        return self.type
+
+    def addNodeToList(self, nodeToAdd):
+        nodeToAdd.parent = self
+        self.value.insert(0, nodeToAdd)
+
+    def updateListNode(self, idx, node):
+        self.value[idx] = node
+
+    def getNodeAtIndex(self, idx):
+        if(idx < 0 or idx >= len(self.value)):
+            # print("Invalid index")
+
+            return "SEMANTIC ERROR"
+        else:
+            return self.value[idx]
+
+    def eval(self):
+        evalNodes = []
+        for node in self.value:
+            evalNodes.append(node.eval())
+        return evalNodes
+
+    def __str__(self):
+        res = "\t" * self.parentCount() + "List"
+        for childNode in self.value:
+            res += "\t" * self.parentCount() + "\n" + str(childNode)
         return res
 
 
@@ -883,6 +926,8 @@ tokens = [
     'HASHTAG',
     'LEFT_BRACKET',
     'RIGHT_BRACKET',
+    'LEFT_CURLY_BRACE',
+    'RIGHT_CURLY_BRACE',
     'RAISED_TO_POWER_OF',
     'TIMES',
     'DIVIDE',
@@ -910,6 +955,8 @@ t_SEMICOLON = r';'
 t_HASHTAG = r'\#'
 t_LEFT_BRACKET = r'\['
 t_RIGHT_BRACKET = r']'
+t_LEFT_CURLY_BRACE = r'{'
+t_RIGHT_CURLY_BRACE = r'}'
 t_RAISED_TO_POWER_OF = r'\*{2}'
 t_TIMES = r'\*'
 t_DIVIDE = r'/'
@@ -1015,10 +1062,9 @@ precedence = (('left', 'DISJUNCTION'),
               ('left', 'TIMES',
                'DIVIDE',
                'INT_DIVIDE',
-               'MOD', ),
+               'MOD'),
               ('right', 'UMINUS'),
               ('right', 'RAISED_TO_POWER_OF'),
-              ('left', 'INDEXING'),
               ('left', 'TUPLE_INDEXING'),
               ('left', 'TUPLE_CREATION'),
               ('left', 'PARENTHETICAL_EXPR'),
@@ -1029,6 +1075,20 @@ def p_expr(p):
     '''expr : stat
             | prop'''
     p[0] = p[1]
+
+
+def p_stat_block(p):
+    '''stat : LEFT_CURLY_BRACE block_contents RIGHT_CURLY_BRACE block_contents'''
+    p[0] = p[2]
+
+
+def p_stat_block_contents(p):
+    '''block_contents : 
+                        | stat block_contents                
+    '''
+    if(isinstance(p[2], Block)):
+        pass
+        # ie if not empty, block_contents exists
 
 
 def p_stat_assign(p):
@@ -1179,7 +1239,7 @@ def p_prop_string(p):
 
 
 def p_prop_list(p):
-    '''prop : LEFT_BRACKET prop_contents RIGHT_BRACKET
+    '''prop_BS : LEFT_BRACKET prop_contents RIGHT_BRACKET
               | LEFT_BRACKET RIGHT_BRACKET
     '''
     if(len(p)-1 == 2):
@@ -1200,6 +1260,20 @@ def p_prop_list_contents(p):
         # print("Adding to existing list")
         p[3].addNodeToList(p[1])
         p[0] = p[3]
+
+
+def p_prop_ListString_indexing(p):
+    '''
+        prop : prop_BS LEFT_BRACKET prop RIGHT_BRACKET
+    '''
+    p[0] = RegularIndexing(p[1], p[3])
+
+
+def p_prop_something(p):
+    '''
+        prop : prop_BS
+    '''
+    p[0] = p[1]
 
 
 def p_prop_tuple(p):
@@ -1231,13 +1305,6 @@ def p_prop_tup_indexing(p):
     p[0] = TupleIndexing(p[3], p[2])
 
 
-def p_prop_ListString_indexing(p):
-    '''
-        prop : prop LEFT_BRACKET prop RIGHT_BRACKET %prec INDEXING
-    '''
-    p[0] = RegularIndexing(p[1], p[3])
-
-
 def p_error(p):
     print("Syntax error at '%s' (%d, %d)" % (p.value, p.lineno, p.lexpos))
     # print("SYNTAX ERROR")
@@ -1261,6 +1328,16 @@ def main():
     #     # print(result)
     #         if result is not None:
     #             print(result.eval())
+    # inp = '''
+    # {
+    #     number = 33;
+    #     test = 40;
+    # }
+
+    # '''
+    # tokenize(inp)
+    # parse(inp)
+    # print("Parsing finished")
     while True:
         inp = input("Enter a proposition: ")
         tokenize(inp)
