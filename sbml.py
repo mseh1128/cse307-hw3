@@ -60,6 +60,7 @@ class Addition(Node):
         super().__init__()
         self.left = left
         self.right = right
+        self.type = "Addition"
         self.left.parent = self
         self.right.parent = self
 
@@ -74,9 +75,27 @@ class Addition(Node):
 
     def eval(self):
         if(self.typecheck()):
-            return self.left.eval()+self.right.eval()
-
-        return "SEMANTIC ERROR"
+            a = self.left
+            b = self.right
+            if(self.right.type not in ["number", "string", "list"]):
+                print("about to evalulate again")
+                b = self.right.eval()
+            if(self.left.type not in ["number", "string", "list"]):
+                print("about to evalulate again")
+                a = self.left.eval()
+            if(a.typecheck() == "number"):
+                if(a.actualType == "integer" and b.actualType == "integer"):
+                    return Number("integer", a.eval() + b.eval())
+                else:
+                    return Number("real", a.eval() + b.eval())
+            elif(a.typecheck() == "string"):
+                return String(a.eval() + b.eval())
+            else:
+                # must be list
+                a.value.extend(b.value)
+                return a
+        else:
+            return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Addition"
@@ -90,6 +109,7 @@ class Membership(Node):
         super().__init__()
         self.left = left
         self.right = right
+        self.type = "Membership"
         self.left.parent = self
         self.right.parent = self
 
@@ -105,9 +125,20 @@ class Membership(Node):
 
     def eval(self):
         if(self.typecheck()):
-            return self.left.eval() in self.right.eval()
+            a = self.left
+            if(self.left.type not in ["string", "list"]):
+                print("about to evalulate again")
+                a = self.left.eval()
+            if(self.left.eval() in self.right.eval()):
+                return AST_True()
+            else:
+                return AST_False()
+        else:
+            return "SEMANTIC ERROR"
+        # if(self.typecheck()):
+        #     return self.left.eval() in self.right.eval()
 
-        return "SEMANTIC ERROR"
+        # return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Membership"
@@ -121,6 +152,7 @@ class Cons(Node):
         super().__init__()
         self.left = left
         self.right = right
+        self.type = "Cons"
         self.left.parent = self
         self.right.parent = self
 
@@ -136,10 +168,14 @@ class Cons(Node):
 
     def eval(self):
         if(self.typecheck()):
+            a = self.left
+            if(self.left.type not in ["list"]):
+                print("about to evalulate again")
+                a = self.left.eval()
             self.right.value.insert(0, self.left)
-            return self.right.eval()
-
-        return "SEMANTIC ERROR"
+            return self.right
+        else:
+            return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Cons"
@@ -153,6 +189,7 @@ class Subtraction(Node):
         super().__init__()
         self.left = left
         self.right = right
+        self.type = "Subtraction"
         self.left.parent = self
         self.right.parent = self
 
@@ -167,9 +204,24 @@ class Subtraction(Node):
 
     def eval(self):
         if(self.typecheck()):
-            return self.left.eval()-self.right.eval()
+            a = self.left
+            b = self.right
+            if(self.right.type not in ["number"]):
+                print("about to evalulate again")
+                b = self.right.eval()
+            if(self.left.type not in ["number"]):
+                print("about to evalulate again")
+                a = self.left.eval()
+            if(a.actualType == "integer" and b.actualType == "integer"):
+                return Number("integer", a.eval() - b.eval())
+            else:
+                return Number("real", a.eval() - b.eval())
+        else:
+            return "SEMANTIC ERROR"
+        # if(self.typecheck()):
+        #     return self.left.eval()-self.right.eval()
 
-        return "SEMANTIC ERROR"
+        # return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Subtraction"
@@ -183,6 +235,7 @@ class Times(Node):
         super().__init__()
         self.left = left
         self.right = right
+        self.type = "Times"
         self.left.parent = self
         self.right.parent = self
 
@@ -195,9 +248,20 @@ class Times(Node):
 
     def eval(self):
         if(self.typecheck()):
-            return self.left.eval()*self.right.eval()
-
-        return "SEMANTIC ERROR"
+            a = self.left
+            b = self.right
+            if(self.right.type not in ["number"]):
+                print("about to evalulate again")
+                b = self.right.eval()
+            if(self.left.type not in ["number"]):
+                print("about to evalulate again")
+                a = self.left.eval()
+            if(a.actualType == "integer" and b.actualType == "integer"):
+                return Number("integer", a.eval() * b.eval())
+            else:
+                return Number("real", a.eval() * b.eval())
+        else:
+            return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Multiplication"
@@ -213,6 +277,7 @@ class Divide(Node):
         super().__init__()
         self.left = left
         self.right = right
+        self.type = "Divide"
         self.left.parent = self
         self.right.parent = self
 
@@ -225,9 +290,21 @@ class Divide(Node):
 
     def eval(self):
         if(self.typecheck()):
-            return float(self.left.eval()/self.right.eval())
+            a = self.left
+            b = self.right
+            if(self.right.type not in ["number"]):
+                print("about to evalulate again")
+                b = self.right.eval()
+            if(self.left.type not in ["number"]):
+                print("about to evalulate again")
+                a = self.left.eval()
+            return Number("real", float(a.eval()/b.eval()))
+        else:
+            return "SEMANTIC ERROR"
+        # if(self.typecheck()):
+        #     return float(self.left.eval()/self.right.eval())
 
-        return "SEMANTIC ERROR"
+        # return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Divide"
@@ -241,6 +318,7 @@ class IntDivide(Node):
         super().__init__()
         self.left = left
         self.right = right
+        self.type = "IntDivide"
         self.left.parent = self
         self.right.parent = self
 
@@ -253,9 +331,21 @@ class IntDivide(Node):
 
     def eval(self):
         if(self.typecheck()):
-            return self.left.eval()//self.right.eval()
+            a = self.left
+            b = self.right
+            if(self.right.type not in ["number"]):
+                print("about to evalulate again")
+                b = self.right.eval()
+            if(self.left.type not in ["number"]):
+                print("about to evalulate again")
+                a = self.left.eval()
+            return Number("integer", a.eval()//b.eval())
+        else:
+            return "SEMANTIC ERROR"
+        # if(self.typecheck()):
+        #     return self.left.eval()//self.right.eval()
 
-        return "SEMANTIC ERROR"
+        # return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "IntDivide"
@@ -269,21 +359,35 @@ class Modulus(Node):
         super().__init__()
         self.left = left
         self.right = right
+        self.type = "Modulus"
         self.left.parent = self
         self.right.parent = self
 
     def typecheck(self):
-        leftType = self.left.typecheck()
-        rightType = self.right.typecheck()
-        if(leftType in ["number"] and self.left.actualType == "integer" and self.left.actualType == self.right.actualType):
-            return self.left.actualType
-        return False
+        # leftType = self.left.typecheck()
+        # rightType = self.right.typecheck()
+        # if(leftType in ["number"] and self.left.actualType == "integer" and self.left.actualType == self.right.actualType):
+        #     return self.left.actualType
+        # return False
+        return True
 
     def eval(self):
         if(self.typecheck()):
-            return self.left.eval() % self.right.eval()
+            a = self.left
+            b = self.right
+            if(self.right.type not in ["number"]):
+                print("about to evalulate again")
+                b = self.right.eval()
+            if(self.left.type not in ["number"]):
+                print("about to evalulate again")
+                a = self.left.eval()
+            return Number("integer", a.eval() % b.eval())
+        else:
+            return "SEMANTIC ERROR"
+        # if(self.typecheck()):
+        #     return self.left.eval() % self.right.eval()
 
-        return "SEMANTIC ERROR"
+        # return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Modulus"
@@ -333,6 +437,7 @@ class Conjunction(Node):
         super().__init__()
         self.left = left
         self.right = right
+        self.type = "Conjunction"
         self.left.parent = self
         self.right.parent = self
 
@@ -347,9 +452,23 @@ class Conjunction(Node):
 
     def eval(self):
         if(self.typecheck()):
-            return self.left.eval() and self.right.eval()
+            a = self.left
+            b = self.right
+            if(self.right.type not in ["Boolean"]):
+                print("about to evalulate again")
+                b = self.right.eval()
+            if(self.left.type not in ["Boolean"]):
+                a = self.left.eval()
+            if(a.eval() and b.eval()):
+                return AST_True()
+            else:
+                return AST_False()
+        else:
+            return "SEMANTIC ERROR"
+        # if(self.typecheck()):
+        #     return self.left.eval() and self.right.eval()
 
-        return "SEMANTIC ERROR"
+        # return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Conjunction"
@@ -363,6 +482,7 @@ class Disjunction(Node):
         super().__init__()
         self.left = left
         self.right = right
+        self.type = "Disjunction"
         self.left.parent = self
         self.right.parent = self
 
@@ -377,9 +497,24 @@ class Disjunction(Node):
 
     def eval(self):
         if(self.typecheck()):
-            return self.left.eval() or self.right.eval()
+            a = self.left
+            b = self.right
+            if(self.right.type not in ["Boolean"]):
+                print("about to evalulate again")
+                b = self.right.eval()
+            if(self.left.type not in ["Boolean"]):
+                print("about to evalulate again")
+                a = self.left.eval()
+            if(a.eval() or b.eval()):
+                return AST_True()
+            else:
+                return AST_False()
+        else:
+            return "SEMANTIC ERROR"
+        # if(self.typecheck()):
+        #     return self.left.eval() or self.right.eval()
 
-        return "SEMANTIC ERROR"
+        # return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Disjunction"
@@ -392,6 +527,7 @@ class Negation(Node):
     def __init__(self, child):
         super().__init__()
         self.child = child
+        self.type = "Negation"
         self.child.parent = self
 
     def typecheck(self):
@@ -403,7 +539,16 @@ class Negation(Node):
 
     def eval(self):
         if(self.typecheck()):
-            return not self.child.eval()
+            a = self.child
+            if(self.child.type not in ["Boolean"]):
+                print("about to evalulate again")
+                a = self.child.eval()
+            if(not a.eval()):
+                return AST_True()
+            else:
+                return AST_False()
+        else:
+            return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Negation"
@@ -416,6 +561,7 @@ class LessThan(Node):
         super().__init__()
         self.left = left
         self.right = right
+        self.type = "LessThan"
         self.left.parent = self
         self.right.parent = self
 
@@ -428,9 +574,24 @@ class LessThan(Node):
 
     def eval(self):
         if(self.typecheck()):
-            return self.left.eval() < self.right.eval()
+            a = self.left
+            b = self.right
+            if(self.right.type not in ["string", "number"]):
+                print("about to evalulate again")
+                b = self.right.eval()
+            if(self.left.type not in ["string", "number"]):
+                print("about to evalulate again")
+                a = self.left.eval()
+            if(a.eval() < b.eval()):
+                return AST_True()
+            else:
+                return AST_False()
+        else:
+            return "SEMANTIC ERROR"
+        # if(self.typecheck()):
+        #     return self.left.eval() < self.right.eval()
 
-        return "SEMANTIC ERROR"
+        # return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Less Than"
@@ -444,6 +605,7 @@ class LessThanEqualTo(Node):
         super().__init__()
         self.left = left
         self.right = right
+        self.type = "LessThanEqualTo"
         self.left.parent = self
         self.right.parent = self
 
@@ -456,9 +618,24 @@ class LessThanEqualTo(Node):
 
     def eval(self):
         if(self.typecheck()):
-            return self.left.eval() <= self.right.eval()
+            a = self.left
+            b = self.right
+            if(self.right.type not in ["string", "number"]):
+                print("about to evalulate again")
+                b = self.right.eval()
+            if(self.left.type not in ["string", "number"]):
+                print("about to evalulate again")
+                a = self.left.eval()
+            if(a.eval() <= b.eval()):
+                return AST_True()
+            else:
+                return AST_False()
+        else:
+            return "SEMANTIC ERROR"
+        # if(self.typecheck()):
+        #     return self.left.eval() <= self.right.eval()
 
-        return "SEMANTIC ERROR"
+        # return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Less Than Equal To"
@@ -472,6 +649,7 @@ class EqualTo(Node):
         super().__init__()
         self.left = left
         self.right = right
+        self.type = "EqualTo"
         self.left.parent = self
         self.right.parent = self
 
@@ -484,9 +662,24 @@ class EqualTo(Node):
 
     def eval(self):
         if(self.typecheck()):
-            return self.left.eval() == self.right.eval()
+            a = self.left
+            b = self.right
+            if(self.right.type not in ["string", "number"]):
+                print("about to evalulate again")
+                b = self.right.eval()
+            if(self.left.type not in ["string", "number"]):
+                print("about to evalulate again")
+                a = self.left.eval()
+            if(a.eval() == b.eval()):
+                return AST_True()
+            else:
+                return AST_False()
+        else:
+            return "SEMANTIC ERROR"
+        # if(self.typecheck()):
+        #     return self.left.eval() == self.right.eval()
 
-        return "SEMANTIC ERROR"
+        # return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Equal To"
@@ -500,6 +693,7 @@ class NotEqualTo(Node):
         super().__init__()
         self.left = left
         self.right = right
+        self.type = "NotEqualTo"
         self.left.parent = self
         self.right.parent = self
 
@@ -512,9 +706,24 @@ class NotEqualTo(Node):
 
     def eval(self):
         if(self.typecheck()):
-            return self.left.eval() != self.right.eval()
+            a = self.left
+            b = self.right
+            if(self.right.type not in ["string", "number"]):
+                print("about to evalulate again")
+                b = self.right.eval()
+            if(self.left.type not in ["string", "number"]):
+                print("about to evalulate again")
+                a = self.left.eval()
+            if(a.eval() != b.eval()):
+                return AST_True()
+            else:
+                return AST_False()
+        else:
+            return "SEMANTIC ERROR"
+        # if(self.typecheck()):
+        #     return self.left.eval() != self.right.eval()
 
-        return "SEMANTIC ERROR"
+        # return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Not Equal To"
@@ -528,6 +737,7 @@ class GreaterThanEqualTo(Node):
         super().__init__()
         self.left = left
         self.right = right
+        self.type = "GreaterThanEqualTo"
         self.left.parent = self
         self.right.parent = self
 
@@ -540,9 +750,24 @@ class GreaterThanEqualTo(Node):
 
     def eval(self):
         if(self.typecheck()):
-            return self.left.eval() >= self.right.eval()
+            a = self.left
+            b = self.right
+            if(self.right.type not in ["string", "number"]):
+                print("about to evalulate again")
+                b = self.right.eval()
+            if(self.left.type not in ["string", "number"]):
+                print("about to evalulate again")
+                a = self.left.eval()
+            if(a.eval() >= b.eval()):
+                return AST_True()
+            else:
+                return AST_False()
+        else:
+            return "SEMANTIC ERROR"
+        # if(self.typecheck()):
+        #     return self.left.eval() >= self.right.eval()
 
-        return "SEMANTIC ERROR"
+        # return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Greater Than Equal To"
@@ -556,6 +781,7 @@ class GreaterThan(Node):
         super().__init__()
         self.left = left
         self.right = right
+        self.type = "GreaterThan"
         self.left.parent = self
         self.right.parent = self
 
@@ -568,9 +794,24 @@ class GreaterThan(Node):
 
     def eval(self):
         if(self.typecheck()):
-            return self.left.eval() > self.right.eval()
+            a = self.left
+            b = self.right
+            if(self.right.type not in ["string", "number"]):
+                print("about to evalulate again")
+                b = self.right.eval()
+            if(self.left.type not in ["string", "number"]):
+                print("about to evalulate again")
+                a = self.left.eval()
+            if(a.eval() > b.eval()):
+                return AST_True()
+            else:
+                return AST_False()
+        else:
+            return "SEMANTIC ERROR"
+        # if(self.typecheck()):
+        #     return self.left.eval() > self.right.eval()
 
-        return "SEMANTIC ERROR"
+        # return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Greater Than"
@@ -594,7 +835,6 @@ class TupleIndexing(Node):
         if(childType in ["tuple"] and (idxType == "number" and self.idx.actualType == "integer")):
             nodeAtIdx = self.child.getNodeAtIndex(self.idx.eval())
             if(nodeAtIdx == None):
-
                 return "SEMANTIC ERROR"
             else:
                 return nodeAtIdx.typecheck()
@@ -602,14 +842,24 @@ class TupleIndexing(Node):
 
     def eval(self):
         if(self.typecheck()):
+            a = self.child
+            if(self.child.type not in ["tuple"]):
+                print("about to evalulate again")
+                a = self.child.eval()
             nodeAtIdx = (self.child.getNodeAtIndex(self.idx.eval()))
             if(nodeAtIdx == None):
-
                 return "SEMANTIC ERROR"
             else:
-                return nodeAtIdx.eval()
+                return nodeAtIdx
+        else:
+            return "SEMANTIC ERROR"
+        # if(self.typecheck()):
+        #     nodeAtIdx = (self.child.getNodeAtIndex(self.idx.eval()))
+        #     if(nodeAtIdx == None):
 
-        return "SEMANTIC ERROR"
+        #         return "SEMANTIC ERROR"
+        #     else:
+        #         return nodeAtIdx.eval()
 
     def __str__(self):
         res = "\t" * self.parentCount() + "TupleIndexing"
@@ -659,14 +909,18 @@ class RegularIndexing(Node):
 
     def eval(self):
         if(self.typecheck()):
-            return self.child.eval()[self.idx.eval()]
-            # nodeAtIdx = (self.child.getNodeAtIndex(self.idx.eval()))
-            # if(nodeAtIdx == None):
-            #
-            # else: "SEMANTIC ERROR"
-            #     return nodeAtIdx.eval()
-
-        return "SEMANTIC ERROR"
+            a = self.child
+            if(self.child.type not in ["list", "string"]):
+                print("about to evalulate again")
+                a = self.child.eval()
+            print(type(a))
+            nodeAtIdx = (self.child.getNodeAtIndex(self.idx.eval()))
+            if(nodeAtIdx == None):
+                return "SEMANTIC ERROR"
+            else:
+                return nodeAtIdx
+        else:
+            return "SEMANTIC ERROR"
 
     def __str__(self):
         res = "\t" * self.parentCount() + "ListOrStringIndexing"
@@ -771,13 +1025,14 @@ class Variable(Node):
     # add typecheck?
     def typecheck(self):
         if self.name in names:
-            return names[self.name].type
+            return names[self.name].typecheck()
         else:
             return None
 
     def eval(self):
         if self.name in names:
-            return names[self.name].eval()
+            print('evaluating variable')
+            return names[self.name]
         else:
             print("Undefined name '%s'" % self.name)
             return None
@@ -791,10 +1046,46 @@ class Variable(Node):
 
     def __str__(self):
         res = "\t" * self.parentCount() + "Variable: " + self.name + "\n"
-        if self.name in names:
-            res += str(names[self.name])
-        else:
-            res += ":None"
+        return res
+
+
+class Assignment(Node):
+    def __init__(self, var, propToAssign):
+        super().__init__()
+        self.var = var
+        self.prop = propToAssign
+        self.prop.parent = self
+        self.type = "assignment"
+
+    # add typecheck?
+    def typecheck(self):
+        pass
+        # if self.name in names:
+        #     return names[self.name].type
+        # else:
+        #     return None
+
+    def eval(self):
+        # must evaluate to a base type (number, boolean, string, list, or tuple)
+        currProp = self.prop
+        while(currProp.type not in ["number", "string", "Boolean", "list", "tuple"]):
+            print('current prop is not a valid instance, reducing')
+            currProp = self.prop.eval()
+        # print('curr prop is now')
+        # print(currProp)
+        names[self.var] = currProp
+        # if(isinstance(self.prop, List)):
+        #     print('was instance of list')
+        # names[self.var] = self.prop
+        # else:
+        #     print('was not instance of list')
+        #     print(self.prop)
+        #     names[self.var] = self.prop.eval()
+        #     print(names)
+
+    def __str__(self):
+        res = "\t" * self.parentCount() + "Assignment: " + str(self.var)
+        res += "\n" + "\t" * self.parentCount() + "To: " + str(self.prop)
         return res
 
 
@@ -850,9 +1141,22 @@ class Print(Node):
         return True
 
     def eval(self):
+        print('IN THE PRINT EVAL')
         if(self.typecheck()):
+            currChild = self.child
+            while(currChild.type not in ["number", "string", "Boolean", "list", "tuple"]):
+                print('current prop is not a valid instance, reducing')
+                currChild = self.child.eval()
+            print('printing now')
+            print(currChild.eval())
+            # if(self.child.type ===)
             # printing to stdout but returning none
-            print(self.child.eval())
+            # while(not isinstance()):
+            # print('current prop is not a valid instance, reducing')
+            # currProp = self.prop.eval()
+            # break
+
+            # print(self.child)
             return None
         return "SEMANTIC ERROR"
 
@@ -863,14 +1167,10 @@ class Print(Node):
 
 
 class Block(Node):
-    def __init__(self, initialNode=None):
+    def __init__(self):
         super().__init__()
         self.type = "block"
-        if initialNode is None:
-            self.value = []
-        else:
-            self.value = [initialNode]
-            initialNode.parent = self
+        self.value = []
 
     def typecheck(self):
         return self.type
@@ -879,27 +1179,143 @@ class Block(Node):
         nodeToAdd.parent = self
         self.value.insert(0, nodeToAdd)
 
-    def updateListNode(self, idx, node):
-        self.value[idx] = node
+    # def getNodeAtIndex(self, idx):
+    #     if(idx < 0 or idx >= len(self.value)):
+    #         # print("Invalid index")
 
-    def getNodeAtIndex(self, idx):
-        if(idx < 0 or idx >= len(self.value)):
-            # print("Invalid index")
-
-            return "SEMANTIC ERROR"
-        else:
-            return self.value[idx]
+    #         return "SEMANTIC ERROR"
+    #     else:
+    #         return self.value[idx]
 
     def eval(self):
-        evalNodes = []
         for node in self.value:
-            evalNodes.append(node.eval())
-        return evalNodes
+            node.eval()
+
+        # evalNodes = []
+        # for node in self.value:
+        #     evalNodes.append(node.eval())
+        # return evalNodes
 
     def __str__(self):
-        res = "\t" * self.parentCount() + "List"
+        res = "\t" * self.parentCount() + "Block"
         for childNode in self.value:
             res += "\t" * self.parentCount() + "\n" + str(childNode)
+        return res
+
+
+class IfStmt(Node):
+    def __init__(self, conditional, block):
+        super().__init__()
+        self.type = "if"
+        self.conditional = conditional
+        self.block = block
+        self.conditional.parent = self
+        self.block.parent = self
+
+    def typecheck(self):
+        # check if conditional if actually a conditional
+        return True
+
+    def eval(self):
+        if(self.typecheck()):
+            a = self.conditional
+            if(self.conditional.type not in ["Boolean"]):
+                print("about to evalulate again")
+                a = self.conditional.eval()
+            if(a.eval()):
+                print('conditon was true in if; now evalulating trueBlock')
+                self.block.eval()
+            else:
+                print('conditon was false in if; not evalulating block!')
+        else:
+            return "SEMANTIC ERROR"
+
+    def __str__(self):
+        res = "\t" * self.parentCount() + "If"
+        res += "\n" + str(self.conditional)
+        res += "\n" + str(self.block)
+        return res
+
+
+class IfElseStmt(Node):
+    def __init__(self, conditional, trueBlock, falseBlock):
+        super().__init__()
+        self.type = "ifelse"
+        self.conditional = conditional
+        self.trueBlock = trueBlock
+        self.falseBlock = falseBlock
+        self.conditional.parent = self
+        self.trueBlock.parent = self
+        self.falseBlock.parent = self
+
+    def typecheck(self):
+        # check if conditional if actually a conditional
+        return True
+
+    def eval(self):
+        if(self.typecheck()):
+            a = self.conditional
+            if(self.conditional.type not in ["Boolean"]):
+                print("about to evalulate again")
+                a = self.conditional.eval()
+            if(a.eval()):
+                print('conditon was true in if; now evalulating trueBlock')
+                self.trueBlock.eval()
+            else:
+                print('conditon was false in if; not evalulating falseBlock!')
+                self.falseBlock.eval()
+        else:
+            return "SEMANTIC ERROR"
+        # print("in if else stmt")
+        # print(self.conditional)
+        # if(self.conditional.eval().eval()):
+        #     print('conditon was true in if; now evalulating trueBlock')
+        #     self.trueBlock.eval()
+        # else:
+        #     print('conditon was false in if; not evalulating falseBlock!')
+        #     self.falseBlock.eval()
+
+    def __str__(self):
+        res = "\t" * self.parentCount() + "Ifelse"
+        res += "\n" + str(self.conditional)
+        res += "\n" + "\t" * (self.parentCount()+1) + "True Block"
+        res += "\n" + str(self.trueBlock)
+        res += "\n" + "\t" * (self.parentCount()+1) + "False Block"
+        res += "\n" + str(self.falseBlock)
+        return res
+
+
+class WhileLoop(Node):
+    def __init__(self, loopCondition, block):
+        super().__init__()
+        self.type = "while"
+        self.loopCondition = loopCondition
+        self.block = block
+        self.loopCondition.parent = self
+        self.block.parent = self
+
+    def typecheck(self):
+        # check if conditional if actually a conditional
+        pass
+
+    def eval(self):
+        if(self.loopCondition.type == 'Boolean'):
+            t = self.loopCondition
+            while(t.eval()):
+                self.block.eval()
+        else:
+            t = self.loopCondition.eval()
+            while(t.eval()):
+                self.block.eval()
+                t = self.loopCondition.eval()
+
+        # t = self.loopCondition.eval()
+        # no break/continue specified so good enough for now
+
+    def __str__(self):
+        res = "\t" * self.parentCount() + "While"
+        res += "\n" + str(self.loopCondition)
+        res += "\n" + str(self.block)
         return res
 
 
@@ -912,7 +1328,12 @@ reserved = {
     'not': 'NEGATION',
     'andalso': 'CONJUNCTION',
     'orelse': 'DISJUNCTION',
-    'print': 'PRINT'
+    'print': 'PRINT',
+    'if': 'IF',
+    'else': 'ELSE',
+    'while': 'WHILE'
+
+
 }
 
 
@@ -1071,35 +1492,40 @@ precedence = (('left', 'DISJUNCTION'),
               )
 
 
-def p_expr(p):
-    '''expr : stat
-            | prop'''
+def p_outer_block(p):
+    '''outer_block : block'''
     p[0] = p[1]
 
 
 def p_stat_block(p):
-    '''stat : LEFT_CURLY_BRACE block_contents RIGHT_CURLY_BRACE block_contents'''
+    '''block : LEFT_CURLY_BRACE block_contents RIGHT_CURLY_BRACE'''
     p[0] = p[2]
 
 
 def p_stat_block_contents(p):
-    '''block_contents : 
-                        | stat block_contents                
+    '''block_contents :
+                        | stat block_contents
     '''
-    if(isinstance(p[2], Block)):
-        pass
-        # ie if not empty, block_contents exists
+    if(len(p) > 1):
+        print('length greater than one')
+        p[2].addNodeToList(p[1])
+        p[0] = p[2]
+    else:
+        print('length not greater than 1')
+        p[0] = Block()
+    # if(isinstance(p[2], Block)):
+    pass
+    # ie if not empty, block_contents exists
 
 
 def p_stat_assign(p):
     'stat : VARIABLE EQUALS prop SEMICOLON'
-    names[p[1]] = p[3]
-    print(names)
+    p[0] = Assignment(p[1], p[3])
 
 
 def p_stat_ListIndex_assign(p):
     '''
-        stat : prop LEFT_BRACKET prop RIGHT_BRACKET EQUALS prop
+        stat : prop_BS LEFT_BRACKET prop RIGHT_BRACKET EQUALS prop SEMICOLON
     '''
     p[0] = ListIndexAssignment(p[1], p[3], p[6])
 
@@ -1109,6 +1535,27 @@ def p_stat_Print(p):
         stat : PRINT LEFT_PARENTHESIS prop RIGHT_PARENTHESIS SEMICOLON
     '''
     p[0] = Print(p[3])
+
+
+def p_stat_While(p):
+    '''
+        stat : WHILE LEFT_PARENTHESIS prop RIGHT_PARENTHESIS block
+    '''
+    p[0] = WhileLoop(p[3], p[5])
+
+
+def p_stat_IfElse(p):
+    '''
+        stat : IF LEFT_PARENTHESIS prop RIGHT_PARENTHESIS block ELSE block
+    '''
+    p[0] = IfElseStmt(p[3], p[5], p[7])
+
+
+def p_stat_If(p):
+    '''
+        stat : IF LEFT_PARENTHESIS prop RIGHT_PARENTHESIS block
+    '''
+    p[0] = IfStmt(p[3], p[5])
 
 
 def p_prop_plus(p):
@@ -1209,7 +1656,7 @@ def p_prop_parenthetical(p):
 
 
 def p_prop_variable(p):
-    'prop : VARIABLE'
+    'prop_BS : VARIABLE'
     p[0] = Variable(p[1])
 
 
@@ -1306,7 +1753,7 @@ def p_prop_tup_indexing(p):
 
 
 def p_error(p):
-    print("Syntax error at '%s' (%d, %d)" % (p.value, p.lineno, p.lexpos))
+    print("Syntax error at (%d, %d)" % (p.lineno, p.lexpos))
     # print("SYNTAX ERROR")
     sys.exit()
 
@@ -1338,13 +1785,54 @@ def main():
     # tokenize(inp)
     # parse(inp)
     # print("Parsing finished")
-    while True:
-        inp = input("Enter a proposition: ")
-        tokenize(inp)
-        result = parse(inp)
-        print(result)
-        if result is not None:
-            print("Evaluation:", result.eval())
+    tBlock = '''
+    {
+        number = 33;
+        isPrime = 1;
+        i = 2;
+        while(isPrime == 1 andalso number > i){
+        if (number mod i == 0) {
+        isPrime = 0;
+        }
+        i = i + 1;
+        }
+        if(isPrime == 1){
+        print("isPrime is true");
+        } else {
+        print("isPrime is false");
+        }
+    }
+    '''
+    # tBLOCK = '''
+    # {
+    #     i=2;
+    #     while(i<3) {
+    #         print('ran once');
+    #         i = i + 1;
+    #     }
+    # }
+    # '''
+    # print(a);
+    # while(a<>4) {
+    #         a=a+1;
+    #     }
+    #     print('broke out of the loop');
+    #     print(a);
+    # inp = input("Enter a proposition: ")
+    tokenize(tBLOCK)
+    result = parse(tBLOCK)
+    print(result)
+    if result is not None:
+        result.eval()
+    # if result is not None:
+    #         print("Evaluation:", result.eval())
+    # while True:
+    #     inp = input("Enter a proposition: ")
+    #     tokenize(inp)
+    #     result = parse(inp)
+    #     print(result)
+    #     if result is not None:
+    #         print("Evaluation:", result.eval())
 
 
 if __name__ == "__main__":
