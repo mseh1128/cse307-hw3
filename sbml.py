@@ -1486,7 +1486,14 @@ class FunctionCall(Node):
         self.type
 
     def eval(self):
-        pass
+        if(self.funcName in functionNames):
+            print('found this function name!')
+            print(s)
+        else:
+            print('COULD NOT FIND THIS FUNC NAME!')
+            print("SEMANTIC ERROR")
+            sys.exit()
+
         # if(self.loopCondition.type == 'Boolean'):
         #     t = self.loopCondition
         #     while(t.eval()):
