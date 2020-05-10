@@ -1259,6 +1259,7 @@ class Print(Node):
                 currChild = self.child.eval()
             # print('printing now')
             # print('here')
+            print('here')
             print(currChild.eval())
             return None
         else:
@@ -1421,6 +1422,90 @@ class WhileLoop(Node):
         return res
 
 
+class FunctionDef(Node):
+    def __init__(self, funcName, formalParams, block, expr):
+        super().__init__()
+        print("in function def with")
+        print("funcName")
+        print(funcName)
+        print(type(funcName))
+        print("formalParams")
+        print(formalParams)
+        print(type(expr))
+        print("block")
+        print(block)
+        print(type(block))
+        print("expr")
+        print(expr)
+        print(type(expr))
+        self.type = "functionDef"
+        self.funcName = funcName
+        self.formalParams = formalParams
+        self.block = block
+        self.expr = expr
+        self.block.parent = self
+        self.expr.parent = self
+
+    def typecheck(self):
+        # check if conditional if actually a conditional
+        self.type
+
+    def eval(self):
+        pass
+        # if(self.loopCondition.type == 'Boolean'):
+        #     t = self.loopCondition
+        #     while(t.eval()):
+        #         self.block.eval()
+        # else:
+        #     t = self.loopCondition.eval()
+        #     while(t.eval()):
+        #         self.block.eval()
+        #         t = self.loopCondition.eval()
+
+        # t = self.loopCondition.eval()
+        # no break/continue specified so good enough for now
+
+    def __str__(self):
+        res = "\t" * self.parentCount() + "Function Definition: " + str(self.funcName)
+        res += "\n" + str(self.formalParams)
+        res += "\n" + str(self.block)
+        return res
+
+
+class FunctionCall(Node):
+    def __init__(self, funcName, args):
+        super().__init__()
+        print("in function call")
+        self.type = "functionCall"
+        self.funcName = funcName
+        self.args = args
+        self.funcName.parent = self
+
+    def typecheck(self):
+        # check if conditional if actually a conditional
+        self.type
+
+    def eval(self):
+        pass
+        # if(self.loopCondition.type == 'Boolean'):
+        #     t = self.loopCondition
+        #     while(t.eval()):
+        #         self.block.eval()
+        # else:
+        #     t = self.loopCondition.eval()
+        #     while(t.eval()):
+        #         self.block.eval()
+        #         t = self.loopCondition.eval()
+
+        # t = self.loopCondition.eval()
+        # no break/continue specified so good enough for now
+
+    def __str__(self):
+        res = "\t" * self.parentCount() + "Function Call: " + str(self.funcName)
+        res += "\n" + str(self.args)
+        return res
+
+
 reserved = {
     'True': 'TRUE',
     'False': 'FALSE',
@@ -1433,9 +1518,8 @@ reserved = {
     'print': 'PRINT',
     'if': 'IF',
     'else': 'ELSE',
-    'while': 'WHILE'
-
-
+    'while': 'WHILE',
+    'fun': 'FUN'
 }
 
 
@@ -1554,7 +1638,7 @@ def t_error(t):
 
 
 # Build lexer
-lexer = lex.lex(debug=False)
+lexer = lex.lex(debug=True)
 
 # This function only calls the lexer to tokenize input. You should try something
 # like this when you begin writing your grammar to make sure your source inputs
@@ -1571,6 +1655,7 @@ def tokenize(inp):
 
 
 names = {}
+functionNames = {}
 
 precedence = (('left', 'DISJUNCTION'),
               ('left', 'CONJUNCTION'),
@@ -1595,8 +1680,84 @@ precedence = (('left', 'DISJUNCTION'),
 
 
 def p_outer_block(p):
-    '''outer_block : block'''
-    p[0] = p[1]
+    '''outer_block : funcDefMult block'''
+    p[0] = p[2]
+
+
+def p_func_defMult(p):
+    '''
+        funcDefMult : 
+                    | funcDef funcDefMult
+
+    '''
+    pass
+
+
+def p_func_def(p):
+    '''
+        funcDef : FUN VARIABLE LEFT_PARENTHESIS varList RIGHT_PARENTHESIS EQUALS block prop SEMICOLON
+                | FUN VARIABLE LEFT_PARENTHESIS RIGHT_PARENTHESIS EQUALS block prop SEMICOLON
+    '''
+    varList = []
+    funcName = p[2]
+    block = None
+    expr = None  # actually expression
+    if(len(p)-1 == 9):
+        print('varlist exists')
+        varList = p[4]
+        block = p[7]
+        expr = p[8]
+    else:
+        print('varlist does not exist!')
+        block = p[6]
+        expr = p[7]
+
+    p[0] = FunctionDef(funcName, varList, block, expr)
+    functionNames[funcName] = p[0]
+
+
+def p_var_list(p):
+    '''
+        varList : VARIABLE
+                | VARIABLE COMMA varList
+    '''
+    print('in var list')
+    print(len(p))
+    if(len(p)-1 == 1):
+        # print('length greater than one')
+        p[0] = [p[1]]
+    else:
+        # print('length not greater than 1')
+        p[3].insert(0, p[1])
+        p[0] = p[3]
+    print(p[0])
+
+
+def p_func_call(p):
+    '''
+        prop : prop_BS LEFT_PARENTHESIS propList RIGHT_PARENTHESIS
+             | prop_BS LEFT_PARENTHESIS RIGHT_PARENTHESIS
+    '''
+    argList = []
+    funcName = p[1]
+    if(len(p)-1 == 4):
+        argList = p[3]
+    p[0] = FunctionCall(funcName, argList)
+
+
+def p_prop_propList(p):
+    '''
+        propList : prop
+                 | prop COMMA propList
+    '''
+    print('in prop list')
+    print(len(p))
+    if(len(p)-1 == 1):
+        p[0] = [p[1]]
+    else:
+        p[3].insert(0, p[1])
+        p[0] = p[3]
+    print(p[0])
 
 
 def p_stat_block(p):
@@ -1659,6 +1820,12 @@ def p_stat_If(p):
     '''
     p[0] = IfStmt(p[3], p[5])
 
+# def p_func_call(p):
+#     '''
+#         stat : IF LEFT_PARENTHESIS prop RIGHT_PARENTHESIS block
+#     '''
+#     p[0] = IfStmt(p[3], p[5])
+
 
 def p_prop_plus(p):
     '''prop : prop PLUS prop'''
@@ -1698,12 +1865,6 @@ def p_prop_modulus(p):
 def p_prop_membership(p):
     'prop : prop IN prop'
     p[0] = Membership(p[1], p[3])
-
-
-def p_prop_uminus(p):
-    'prop : MINUS INTEGER %prec UMINUS'
-    # only integers can be -, not floats
-    p[0] = Number('integer', p[2]*-1)
 
 
 def p_prop_lessThan(p):
@@ -1780,6 +1941,12 @@ def p_prop_false(p):
 def p_prop_integer(p):
     'prop : INTEGER'
     p[0] = Number('integer', p[1])
+
+
+def p_prop_uminus(p):
+    'prop : MINUS INTEGER %prec UMINUS'
+    # only integers can be -, not floats
+    p[0] = Number('integer', p[2]*-1)
 
 
 def p_prop_real(p):
@@ -1881,18 +2048,18 @@ parser = yacc.yacc(debug=True)
 
 
 def parse(inp):
-    result = parser.parse(inp, debug=0)
+    result = parser.parse(inp, debug=1)
     return result
 
 
 def main():
     # inp = input("Enter a proposition: ")
     # tokenize(inp)
-    with open(sys.argv[1]) as fp:
-        result = parse(fp.read())
+    # with open(sys.argv[1]) as fp:
+    #     result = parse(fp.read())
         # print(result)
-        if result is not None:
-            result.eval()
+        # if result is not None:
+        #     result.eval()
 
     # inp = '''
     # {
@@ -1904,57 +2071,29 @@ def main():
     # tokenize(inp)
     # parse(inp)
     # print("Parsing finished")
-#     tBLOCK = '''
-#    {
-#  number = 33;
-#  isPrime = 1;
-#  i = 2;
-#  while(isPrime == 1 andalso number > i){
-#  if (number mod i == 0) {
-#  isPrime = 0;
-#  }
-#  i = i + 1;
-#  }
-#  if(isPrime == 1){
-#  print("isPrime is true");
-#  } else {
-#  print("isPrime is false");
-#  }
-# }
+    tBLOCK = '''
+        fun factorial(n, a, c) =
+        {
+            if(n < 1) {
+                output = 1;
+            }
+            else
+            {
+                output = n * factorial(n - 1);
+            }
+        }
+        output;
 
-#     '''
+        {
+            print('hello');
+        }
+     '''
 
-#     tokenize(tBLOCK)
-#     result = parse(tBLOCK)
-#     print(result)
-#     if result is not None:
-#         result.eval()
-    # tBLOCK = '''
-    # {
-    #     i=2;
-    #     while(i<3) {
-    #         print('ran once');
-    #         i = i + 1;
-    #     }
-    # }
-    # '''
-    # print(a);
-    # while(a<>4) {
-    #         a=a+1;
-    #     }
-    #     print('broke out of the loop');
-    #     print(a);
-    # inp = input("Enter a proposition: ")
-
-    # if result is not None:
-    #         print("Evaluation:", result.eval())
-    # while True:
-    #     inp = input("Enter a proposition: ")
-    #     tokenize(inp)
-    #     result = parse(inp)
-    #     print(result)
-    #     if result is not None:
-    #         print("Evaluation:", result.eval())
+    tokenize(tBLOCK)
+    result = parse(tBLOCK)
+    print(result)
+    if result is not None:
+        result.eval()
 
 
 if __name__ == "__main__":
