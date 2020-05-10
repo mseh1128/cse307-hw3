@@ -1425,19 +1425,19 @@ class WhileLoop(Node):
 class FunctionDef(Node):
     def __init__(self, funcName, formalParams, block, expr):
         super().__init__()
-        print("in function def with")
-        print("funcName")
-        print(funcName)
-        print(type(funcName))
-        print("formalParams")
-        print(formalParams)
-        print(type(expr))
-        print("block")
-        print(block)
-        print(type(block))
-        print("expr")
-        print(expr)
-        print(type(expr))
+        # print("in function def with")
+        # print("funcName")
+        # print(funcName)
+        # print(type(funcName))
+        # print("formalParams")
+        # print(formalParams)
+        # print(type(expr))
+        # print("block")
+        # print(block)
+        # print(type(block))
+        # print("expr")
+        # print(expr)
+        # print(type(expr))
         self.type = "functionDef"
         self.funcName = funcName
         self.formalParams = formalParams
@@ -1477,22 +1477,32 @@ class FunctionCall(Node):
         super().__init__()
         print("in function call")
         self.type = "functionCall"
-        self.funcName = funcName
+        self.funcName = funcName.name
         self.args = args
-        self.funcName.parent = self
 
     def typecheck(self):
         # check if conditional if actually a conditional
         self.type
 
     def eval(self):
+        print('hereee')
+        print(self.args)
+        print(self.funcName)
         if(self.funcName in functionNames):
             print('found this function name!')
-            print(s)
+            funcToRun = functionNames[self.funcName]
+            print(funcToRun.formalParams)
+            if(len(funcToRun.formalParams) != len(self.args)):
+                print('INVALID NUM OF ARGS')
+                print("SEMANTIC ERROR")
+                sys.exit()
+            else:
+                pass
         else:
             print('COULD NOT FIND THIS FUNC NAME!')
             print("SEMANTIC ERROR")
             sys.exit()
+        return String("hello")
 
         # if(self.loopCondition.type == 'Boolean'):
         #     t = self.loopCondition
@@ -2092,7 +2102,7 @@ def main():
         output;
 
         {
-            print('hello');
+            print(factorial(3,2,4));
         }
      '''
 
